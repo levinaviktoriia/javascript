@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 0</title>
+</head>
+<body>
+	<h1>Задача 0</h1>
+	<h3>
+		Обчислити значення виразів
+	</h3>
+	<div><img style="width: 200px;" src="../img/task-0.png" alt="Tasks-0"></div>
+	<script>
+		let a = parseFloat(prompt('Введіть будь-яке значення a'))
+		let b = parseFloat(prompt('Введіть будь-яке значення b'))
+		let c = parseFloat(prompt('Введіть будь-яке значення c'))
+		document.write(`
+		a=${a} <br>
+		b=${b} <br>
+		c=${c}`)
+	</script>
+	<ol>
+		<li>
+			<p>S<sub>1</sub> = a + 12 + b</p>
+			<script>
+				let s1 = a + 12 + b
+				document.write(`S<sub>1</sub> = ${s1}`)
+			</script>
+		</li>
+		<li>
+			<p>S<sub>2</sub> = Math.sqrt((a + b)/(a * 2))</p>
+			<script>
+				let s2 = Math.sqrt((a + b)/(a * 2))
+				// або: 
+				// let s2 = ((a + b)/(2 * a)) ** (1/2)
+				document.write(`S<sub>2</sub> = ${s2}`)
+			</script>
+		</li>
+		<li>
+			<p>S<sub>3</sub> = Math.pow(((a + b) * c), 1/3)</p>
+			<script>
+				let s3 = Math.pow(((a + b) * c), 1/3)
+				// або: 
+				// let s3 = (((a + b) * c) ** (1/3))
+				document.write(`S<sub>3</sub> = ${s3}`)
+			</script>
+		</li>
+		<li>
+			<p>S<sub>4</sub> = Math.sin(a/-b)</p>
+			<script>
+				let s4 = Math.sin(a/-b)
+				document.write(`S<sub>4</sub> = ${s4}`)
+			</script>
+		</li>
+	</ol>
+</body>
+</html>

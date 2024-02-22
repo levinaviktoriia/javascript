@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 4</title>
+</head>
+<body>
+	<h1>Задача 4</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано довжину у сантиметрах. Визначати скільки це метрів і кілометрів.
+	</h3>
+	<script>
+		// Рішення:
+		let lengthSegment = parseFloat(prompt('Введіть довжину відрізка, см.'))
+		let lengthInMeters = lengthSegment / 100
+		let lengthInKilometers = lengthSegment / 100000
+		document.write(`
+			<p>Довжина відрізка в метрах дорівнює ${lengthInMeters}</p>
+			<p>Довжина відрізка в кілометрах дорівнює ${lengthInKilometers}</p>
+		`)
+	</script>
+</body>
+</html>
