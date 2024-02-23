@@ -13,9 +13,10 @@
 	</h3>
 	<script>
 		// Рішення:
-		let currentYear = 2024
-		let userYear = parseInt(prompt('Введіть рік народження'))
-		document.write(`Ваш вік: ${currentYear-userYear}`)
+		const currentYear = new Date().getFullYear()
+		let userBirthd = parseInt(prompt('Введіть рік народження', '1999'))
+		let userAge = currentYear-userBirthd
+		document.write(`Ваш вік: ${userAge}`)
 	</script>
 </body>
 </html>

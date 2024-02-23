@@ -14,7 +14,7 @@
 	<script>
 		// Рішення:
 		let quantityProduct = parseInt(prompt('Введіть кількість товару, шт.', '1'))
-		let priceProduct = parseFloat(prompt('Введіть вартість товару, ₴'))
+		let priceProduct = parseFloat(prompt('Введіть вартість товару, ₴', '0'))
 		const TAX_PERCENT = 5
 		let totalCost = quantityProduct * priceProduct
 		let taxCost = totalCost * (TAX_PERCENT / 100)
