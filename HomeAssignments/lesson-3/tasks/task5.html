@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 5</title>
+</head>
+<body>
+	<h1>Задача 5</h1>
+	<h3>
+		<!-- Дано: -->
+		З клавіатури вводиться назва категорії водія (А-мотоцикл, В-легковий автомобіль, С-вантажний автомобіль). Вивести на екран назву транспортного засобу, яким він може керувати.
+	</h3>
+	<script>
+		const categoryDriving = prompt('Введіть назву категорії прав водія (A, B чи C)')
+		let result
+		switch(categoryDriving.toUpperCase()){
+			case 'A':
+			result='Ви маєте право керувати мотоциклом.'
+			break
+			case 'B':
+			result='Ви маєте право керувати легковим автомобілем.'
+			break
+			case 'C':
+			result='Ви маєте право керувати вантажним автомобілем.'
+			break
+			default:
+			result='Ви ввели некоректне значення.'
+			break
+		}
+		document.write(result)
+	</script>
+</body>
+</html>
