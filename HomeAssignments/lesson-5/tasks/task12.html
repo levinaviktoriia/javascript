@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 12</title>
+	<style>
+		table {
+			margin: 0 auto;
+			text-align: center;
+			font-size: 30px;
+			font-weight: 700;
+		}
+		.button{
+			text-decoration: none;
+			background-color: rgb(210, 255, 191);
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Задача 12</h1>
+	<h3>
+		<!-- Дано: -->
+		Ігровий автомат. Випадково вибираємо зображення у 3 позиціях. Вибір у кожній позиції вибирається як одне з
+		чотирьох зображень. Вивести ці зображення і повідомити виграш користувача (три перших зображення 100 грн, три
+		других – 200, три третіх – 500, три четвертих зображення – 1000грн). Використати цикли і switch (для вибору
+		зображення за номером).
+	</h3>
+	<script>
+		let sellSlotMachineOne, sellSlotMachineTwo, sellSlotMachineThree
+		document.write('<table border="1px"> <tr>')
+		
+		for (let i = 1; i <= 3; i++) {
+			const randomImage = 1 + Math.floor(Math.random() * 4)
+			let imgSrc
+			switch (randomImage) {
+				case 1:
+					imgSrc = '../img/lemon.png'
+					break
+				case 2:
+					imgSrc = '../img/orange.png'
+					break
+				case 3:
+					imgSrc = '../img/cherries.jpg'
+					break
+				case 4:
+					imgSrc = '../img/seven.png'
+					break
+			}
+			document.write(`<td><img src="${imgSrc}" style="width: 150px; height: 150px;" alt="Image"></td>`)
+			if (i === 1) sellSlotMachineOne = randomImage
+			if (i === 2) sellSlotMachineTwo = randomImage
+			if (i === 3) sellSlotMachineThree = randomImage
+		}
+		let result
+		if (sellSlotMachineOne === sellSlotMachineTwo && sellSlotMachineTwo === sellSlotMachineThree){
+			if (sellSlotMachineOne === 1)
+				result = 'Ваш виграш - 100 грн!'
+			else if (sellSlotMachineOne === 2)
+				result = 'Ваш виграш - 200 грн!'
+			else if (sellSlotMachineOne === 3)
+				result = 'Ваш виграш - 500 грн!'
+			else if (sellSlotMachineOne === 4)
+				result = 'Ваш виграш - 1000 грн!'
+		}
+		else result = 'Ви програли!'
+		document.write(`<tr><td colspan="3">${result}</td></tr>`)
+		document.write(`<tr><td colspan="3"><a class="button" href="task12.html">Грати ще!</a></td></tr>`)
+		document.write('</tr> </table>')
+	</script>
+</body>
+
+</html>

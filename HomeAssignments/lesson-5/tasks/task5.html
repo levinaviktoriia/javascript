@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 5</title>
+</head>
+<body>
+	<h1>Задача 5</h1>
+	<h3>
+		<!-- Дано: -->
+		Вивести таблицю
+	</h3>
+	<script>
+		let valueColumn = 0
+		document.write('<table border="1px">')
+		for (let row = 0; row < 3; row++){
+			document.write('<tr>')
+			for (let column = 0; column < 3; column++) {
+				document.write(`<td>${++valueColumn}</td>`)
+			}
+			document.write('</tr>')
+		}
+		document.write('</table>')
+	</script>
+</body>
+</html>

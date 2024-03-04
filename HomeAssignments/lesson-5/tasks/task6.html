@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 6</title>
+	<style>
+		table{
+			display: inline-block;
+		}
+		table:not(:last-child){
+			margin-right: 30px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Задача 6</h1>
+	<h3>
+		<!-- Дано: -->
+		Вивести 3 таблиці (по 3 рядки і 3 стовпці у кожній) за зразком
+	</h3>
+	<script>
+		let valueColumn = 0
+		for (let table = 0; table < 3; table++) {
+			document.write('<table border="1px">')
+				for (let row = 0; row < 3; row++){
+					document.write('<tr>')
+					for (let column = 0; column < 3; column++) {
+						document.write(`<td>${++valueColumn}</td>`)
+					}
+					document.write('</tr>')
+				}
+			document.write('</table>')
+		}
+	</script>
+</body>
+</html>

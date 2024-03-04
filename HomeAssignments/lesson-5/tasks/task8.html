@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 8</title>
+</head>
+
+<body>
+	<h1>Задача 8</h1>
+	<h3>
+		<!-- Дано: -->
+		Користувач загадує число. За 3 спроби комп’ютер намагається вгадати число користувача (використати confirm).
+	</h3>
+	<script>
+		alert('Загадайте число від 1 до 5')
+		let guessNumb
+		let answerUser
+		for (let i = 1; i <= 3; i++) {
+			guessNumb = 1 + Math.floor(Math.random() * 5)
+			answerUser = window.confirm(`Це ${guessNumb}? Я угадав?`)
+			if (answerUser) break
+			else if (i !== 3)
+				alert('На жаль, не вгадав! Спробую ще раз!')
+		}
+		if (answerUser)
+			document.write(`Ура! Загадане число - ${guessNumb}`)
+		else
+			document.write('Вибачте, я не вгадав.')
+	</script>
+</body>
+
+</html>

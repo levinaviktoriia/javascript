@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 13</title>
+	<style>
+		h4 {
+			font-size: 26px;
+		}
+
+		td {
+			width: 50px;
+			height: 50px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Задача 13</h1>
+	<h3>
+		<!-- Дано: -->
+		Морський бій. Комп’ютер випадково розташовує одиночний корабель на полі розміром N*M. Маючи К снарядів користувач
+		намагається потопити корабель.
+	</h3>
+	<script>
+		alert('Давайте пограємо у "Морський бій". Спробуйте потопити корабель.')
+		let N = parseInt(prompt('Введіть кількість рядків'))
+		let M = parseInt(prompt('Введіть кількість стовпчиків'))
+		const sellCount = N * M
+		let sellNumb = 1
+		const shotsNumb = Math.ceil(sellCount * 0.05)
+		const sellShip = 1 + Math.floor(Math.random() * sellCount)
+		document.write('<table border="1px">')
+		for (let row = 0; row < N; row++) {
+			document.write('<tr>')
+			for (let column = 0; column < M; column++) {
+				if (sellShip === sellNumb)
+					document.write('<td style="border: 2px solid blue;"></td>')
+				else document.write(`<td></td>`)
+				sellNumb++
+			}
+			document.write('</tr>')
+		}
+		document.write('</table>')
+
+		let win = false
+		for (let i = 0; i < shotsNumb; i++) {
+			let attemptShot = parseInt(prompt(`Кількість спроб: ${shotsNumb}. Введіть номер комірки, в який хочете вистрілити. (від 1 до ${sellCount})`))
+			if (attemptShot === sellShip) {
+				win = true
+				break
+			}
+			else alert('Упс! Не влучили в ціль!')
+		}
+		win ? document.write('<h4>Ура! Ви виграли! Корабель потонув!</h4>') : document.write('<h4>На жаль, ви програли.</h4>')
+	</script>
+
+</body>
+
+</html>
