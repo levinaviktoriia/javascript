@@ -17,19 +17,17 @@
 		alert('Давайте порахуємо суму всіх непарних чисел у заданому інтервалі.')
 		let numbOne = parseInt(prompt('Введіть перше число.'))
 		let numbTwo = parseInt(prompt('Введіть друге число.'))
-
-		let diffNumb
+		let someVar
+		if (numbOne > numbTwo){
+			someVar = numbOne
+			numbOne = numbTwo
+			numbTwo = someVar
+		}
 		let sumOddNumb = 0
-
-		if (numbOne > numbTwo)
-			diffNumb = numbOne - numbTwo
-		else
-			diffNumb = numbTwo - numbOne
-		if (diffNumb % 2 === 0) --diffNumb
-
-		while (diffNumb >= 0) {
-			sumOddNumb += diffNumb
-			diffNumb -= 2
+		for (let numb = numbOne+1; numb < numbTwo; numb++) {
+			if(numb%2===1){
+				sumOddNumb+=numb
+			}
 		}
 		document.write(`Сума всіх непарних чисел від ${numbOne} до ${numbTwo} дорівнює ${sumOddNumb}.`)
 
