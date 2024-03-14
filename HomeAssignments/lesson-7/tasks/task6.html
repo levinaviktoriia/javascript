@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 6</title>
+	<style>
+		table{
+			border: 1px solid #000;
+		}
+		td{
+			border: 1px solid green;
+		}
+	</style>
+</head>
+<body>
+	<h1>Задача 6</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити функцію, яка створює таблицю з вказаною кількістю рядків і стовпців (таблиця заповнюється заданим фіксованим повідомленням).
+	</h3>
+	<script>
+		function createTable(numbRow, numbColumn, contentCell){
+			document.write('<table>')
+				for (let row = 1; row <= numbRow; row++) {
+					document.write('<tr>')
+						for (let column = 1; column <= numbColumn; column++) {
+							document.write(`<td>${contentCell}</td>`)
+						}
+					document.write('</tr>')
+				}
+			document.write('</table>')
+		}
+
+		alert('Давайте створимо таблицю.')
+		let numbRow = parseInt(prompt('Скільки рядків у ній має бути?', '4'))
+		let numbColumn = parseInt(prompt('Скільки колонок у ній має бути?', '7'))
+		let contentCell = prompt('Введіть вміст клітинок таблиці.', 'Some content')
+		createTable(numbRow, numbColumn, contentCell)
+	</script>
+</body>
+</html>

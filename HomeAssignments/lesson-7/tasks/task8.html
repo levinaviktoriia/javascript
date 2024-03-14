@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 8</title>
+	<style>
+		img{
+			width: 100%;
+		}
+		.banner{
+			text-align: center;
+			background-color: #ffe1cb;
+			width: 50%;
+			margin: 0 auto;
+			padding: 30px 30px 50px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Задача 8</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити функцію, яка виводить банер (у функцію передаються: зображення, заголовок та посилання куди переходимо при кліку на зображення) (тег img повине знаходитись у середині тега a)
+	</h3>
+	
+	<script>
+		function createBanner(titleBanner, imageBanner, linkBanner){
+			document.write(`
+				<div class="banner">
+					<h2>${titleBanner}</h2>
+					<a href="${linkBanner}"><img src="${imageBanner}"></a>
+				</div>
+			`)
+		}
+		let titleBanner = 'Заголовок'
+		let imageBanner = '../img/flowers-01.jpg'
+		let linkBanner = 'https://www.google.com/?authuser=0'
+		createBanner(titleBanner, imageBanner, linkBanner)
+	</script>
+</body>
+</html>

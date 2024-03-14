@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 3</title>
+</head>
+
+<body>
+	<h1>Задача 3</h1>
+	<h3>
+		<!-- Дано: -->
+		Задача 3. Створити окремі функції, які для 4 чисел знаходять:
+	</h3>
+	<ol>
+		<li>суму;</li>
+		<li>добуток;</li>
+		<li>середнє арифметичне;</li>
+		<li>мінімальне значення.</li>
+	</ol>
+	<script>
+		function calcSum(num1, num2, num3, num4) {
+			return num1 + num2 + num3 + num4
+		}
+		function calcMultiply(num1, num2, num3, num4) {
+			return num1 * num2 * num3 * num4
+		}
+		function calcAverage(num1, num2, num3, num4) {
+			return (num1 + num2 + num3 + num4) / 4
+		}
+		function getMinNumb(num1, num2, num3, num4) {
+			let minNumb = num1
+			if (minNumb > num2) minNumb = num2
+			else if (minNumb > num3) minNumb = num3
+			else if (minNumb > num4) minNumb = num4
+			return minNumb
+		}
+
+		let num1 = parseFloat(prompt('Введіть число a:'))
+		let num2 = parseFloat(prompt('Введіть число b:'))
+		let num3 = parseFloat(prompt('Введіть число c:'))
+		let num4 = parseFloat(prompt('Введіть число d:'))
+	
+		let sumNumb = calcSum(num1, num2, num3, num4)
+		let multiplyNumb = calcMultiply(num1, num2, num3, num4)
+		let averageNumb = calcAverage(num1, num2, num3, num4)
+		let minNumb = getMinNumb(num1, num2, num3, num4)
+
+		document.write(`
+		<h5>a=${num1}, b=${num2}, c=${num3}, d=${num4}</h5>
+		<ol>
+			<li>Сума дорівнює ${sumNumb}</li>
+			<li>Добуток дорівнює ${multiplyNumb}</li>
+			<li>Середнє арифметичне дорівнює ${averageNumb}</li>
+			<li>Мінімальне значення = ${minNumb}</li>
+		</ol>
+		`)
+	</script>
+</body>
+
+</html>

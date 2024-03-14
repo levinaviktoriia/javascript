@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 5</title>
+</head>
+
+<body>
+	<h1>Задача 5</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити окремі функції, які переводять:
+	</h3>
+	<ol>
+		<li>Сантиметри у дюйми;</li>
+		<li>Кілограми у фунти;</li>
+		<li>Кілометри у милі.</li>
+	</ol>
+	<script>
+		function convertCmToInches(valueInCm) {
+			return valueInCm / 2.54
+		}
+		function convertKiloToIb(valueInKilo) {
+			return valueInKilo * 2.2046
+		}
+		function convertKmToMile(valueInKm) {
+			return valueInKm / 1.609344
+		}
+
+		let valueInCm = parseFloat(prompt('Введіть довжину, яку потрібно перевести в дюйми.'))
+		let valueInInches = convertCmToInches(valueInCm)
+		let valueInKilo = parseFloat(prompt('Введіть довжину, яку потрібно перевести в фунти.'))
+		let valueInIb = convertKiloToIb(valueInCm)
+		let valueInKm = parseFloat(prompt('Введіть довжину, яку потрібно перевести в милі.'))
+		let valueInMile = convertKmToMile(valueInCm)
+		
+		document.write(`
+			<ul>
+				<li>${valueInCm} см = ${valueInInches.toFixed(2)} дюймів;</li>
+				<li>${valueInCm} кг = ${valueInIb.toFixed(2)} фунтів;</li>
+				<li>${valueInCm} км = ${valueInMile.toFixed(2)} миль.</li>
+			</ul>
+		`)
+	</script>
+</body>
+
+</html>
