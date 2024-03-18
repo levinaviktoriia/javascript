@@ -15,9 +15,9 @@
 	</h3>
 
 	<script>
-		function calcPricesExcludingTax(pricesList, percentTax) {
-			let arr = pricesList.map((price) =>
-				(price * (100 - percentTax) / 100).toFixed(2)
+		function calcAmountTaxPaid(pricesList, percentTax) {
+			let arr = pricesList.map(
+				(price) => (price * percentTax / 100).toFixed(2)
 			)
 			return arr
 		}
@@ -25,11 +25,11 @@
 		let pricesList = [200, 1300, 899, 389, 1149, 1400, 200, 2000]
 		const percentTax = 20
 
-		let pricesExcludingTaxList = calcPricesExcludingTax(pricesList, percentTax)
+		let amountTaxPaid = calcAmountTaxPaid(pricesList, percentTax)
 		document.write(`
 		<div>
-			<h4>Ціни за вирахуванням податку у розмірі ${percentTax}%:</h4>
-			<p>${pricesExcludingTaxList.join(', ')}.</p>
+			<h4>Величина сплаченого податку у розмірі ${percentTax}%:</h4>
+			<p>${amountTaxPaid.join(', ')}.</p>
 		</div>
 		`)
 	</script>
