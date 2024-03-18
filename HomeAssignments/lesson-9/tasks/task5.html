@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 5</title>
+</head>
+
+<body>
+	<h1>Задача 5</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано масив елементів. Знайти добуток додатних елементів
+	</h3>
+	<script>
+		let numbersList = [5, -23, 7, 10, -9, 1, -42];
+		function calcMultiplePositiveNumb(numbersList) {
+			let multiple = 1
+			for (item of numbersList) {
+				if (item > 0) multiple *= item
+			}
+			return multiple
+		}
+
+		document.write(`Добуток додатних чисел (серед ${numbersList}) дорівнює: ${calcMultiplePositiveNumb(numbersList)}.`)
+	</script>
+</body>
+
+</html>

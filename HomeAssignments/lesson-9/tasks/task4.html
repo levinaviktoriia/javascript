@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 4</title>
+</head>
+<body>
+	<h1>Задача 4</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано масив елементів. Вивести на екран елементи, що більші за 100.
+	</h3>
+	<script>
+		let numbersList = [50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 144]
+		let numbersListOverHundred = []
+		for(let item of numbersList){
+			if(item>100) numbersListOverHundred.push(item)
+		}
+		document.write(`Елементи, що більші за 100: ${numbersListOverHundred}.`)
+	</script>
+</body>
+</html>

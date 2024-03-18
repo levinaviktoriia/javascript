@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 3</title>
+</head>
+<body>
+	<h1>Задача 3</h1>
+	<h3>
+		<!-- Дано: -->
+		Користувач вводить кількість елементів. Створити масив, у якому перші 5 елементів заповнені 1-цями, а інші до кінця масиву заповнені 7-ками.
+	</h3>
+	<script>
+		function createArray(countElements){
+			return new Array(countElements)
+		}
+		function fillingArray(array, countElements){
+			array.fill(1, 0, 5)
+			array.fill(7, 5, countElements)
+			return array
+		}
+		let countElements = parseInt(prompt('Скільки елементів у масиві хочете створити?'))
+		let newArray = createArray(countElements)
+		document.write(`Створений масив: ${fillingArray(newArray, countElements)}.`)
+	</script>
+</body>
+</html>

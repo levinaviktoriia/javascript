@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 10</title>
+</head>
+
+<body>
+	<h1>Задача 10</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано масив цін у грн. Податок складає 20%. Сформувати масив, який буде містити величину сплаченого податку у грн.
+	</h3>
+
+	<script>
+		function calcPricesExcludingTax(pricesList, percentTax) {
+			let arr = pricesList.map((price) =>
+				(price * (100 - percentTax) / 100).toFixed(2)
+			)
+			return arr
+		}
+
+		let pricesList = [200, 1300, 899, 389, 1149, 1400, 200, 2000]
+		const percentTax = 20
+
+		let pricesExcludingTaxList = calcPricesExcludingTax(pricesList, percentTax)
+		document.write(`
+		<div>
+			<h4>Ціни за вирахуванням податку у розмірі ${percentTax}%:</h4>
+			<p>${pricesExcludingTaxList}.</p>
+		</div>
+		`)
+	</script>
+</body>
+
+</html>

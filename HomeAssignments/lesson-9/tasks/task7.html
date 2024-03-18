@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 7</title>
+</head>
+
+<body>
+	<h1>Задача 7</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано масив цін. Змінити цей масив так, що на ціни товарів, які більші за 1000 грн. дати 30% знижки.
+	</h3>
+	<script>
+		function calcDiscountedPrice(pricesList, startDiscount, percentDiscount){
+			pricesList.forEach((price, index, arr) => {
+				if (price > startDiscount) {
+					arr[index] = (arr[index] * (100 - percentDiscount) / 100).toFixed(2)
+				} 
+			});
+			return pricesList
+		}
+		
+		let pricesList = [200, 1300, 899, 389, 1149, 1400, 200, 2000]
+		const percentDiscount = 30
+		const startPriceDiscount = 1000
+		let discountedPricesList = calcDiscountedPrice(pricesList, startPriceDiscount, percentDiscount)
+		document.write(`Ціни зі знижкою: ${discountedPricesList}.`)
+	</script>
+</body>
+
+</html>

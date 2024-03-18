@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 8</title>
+</head>
+<body>
+	<h1>Задача 8</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано масив номерів авто. Сформувати новий масив тих, які починаються на «А»
+	</h3>
+	<script>
+		/*
+		function createNewListByFirstLetter(numbersList, letter){
+			let arr = []
+			for (let i = 0; i < numbersList.length; i++) {
+				if(numbersList[i][0] === letter)
+					arr.push(numbersList[i])
+			}
+			return arr
+		}
+		*/
+		function createNewListByFirstLetter(numbersList, letter){
+			let arr = numbersList.filter(
+				(number, index, baseArr) => numbersList[index][0] == letter
+			)
+			return arr
+		}
+
+		let carNumbersList = ['АА1234АС','ВВ5678ЕВ','СМ9012ІС','ТР3456КУ','НО7890НО','АХ1234ІМ','ВІ5678ОР','СТ9012ПА','ТО3456РІ','НР7890ОН','АР1234НЕ','ВО5678ІК','СР9012РС','ТУ3456ВО','АІ7890ПС']
+		
+		let newCarNumbersList = createNewListByFirstLetter(carNumbersList, 'А')
+		document.write(`Новий масив номерів авто, що починаються на 'А': ${newCarNumbersList.join(', ')}`)
+	</script>
+</body>
+</html>
