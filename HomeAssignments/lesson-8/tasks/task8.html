@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 8</title>
+</head>
+<body>
+	<h1>Задача 8</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано одновимірний масив, у якому зберігається певна виграшна сума (елементи заповнюються випадковим чином значеннями від -500 до 500). Надаючи користувачу можливість вибирати номери елементів  (поки він не відмовиться). Знаходити сумарний виграш.
+	</h3>
+	<script>
+		function getRandomNumbersListInInterval(minNumb, maxNumb, countNumb){
+			let arr=[]
+			for (let i = 0; i < countNumb; i++) {
+				let randomNumb = minNumb + Math.floor(Math.random()*(maxNumb-minNumb+1))
+				arr.push(randomNumb)
+			}
+			return arr
+		}
+		function getCountOfPoints(numbersList, selectedNumb){
+			let points = 0
+			for (let i = 0; i < numbersList.length; i++) {
+				if(i+1 ===selectedNumb){
+					points = numbersList[i]
+					break
+				}
+			}
+			return points
+		}
+		function getResultOfGame(randomNumbersList, countNumb){
+			let sum=0
+			let countOfPoints
+			let selectedUserNumb
+			do{
+				selectedUserNumb = parseInt(prompt(`Введіть число від 1 до ${countNumb}:`))
+				countOfPoints = getCountOfPoints(randomNumbersList, selectedUserNumb)
+				sum+=countOfPoints
+			}while(selectedUserNumb)
+			return sum
+		}
+		let countNumb = 15
+		let randomNumbersList = getRandomNumbersListInInterval(-500, 500, countNumb)
+		let resultOfGame = getResultOfGame(randomNumbersList, countNumb)
+		if(resultOfGame>0)
+			document.write(`Ваш виграш складає ${resultOfGame} грн.`)
+		else
+			document.write(`Ви програли ${resultOfGame} грн.`)
+	</script>
+</body>
+</html>

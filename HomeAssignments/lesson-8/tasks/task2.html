@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 2</title>
+</head>
+<body>
+	<h1>Задача 2</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано масив, який зберігає кількість відвідувачів магазину протягом тижня. Вивести на екран:
+	</h3>
+	<ul>
+		<li>номери днів, протягом яких кількість відвідувачів була меншою за 20;</li>
+		<li>номери днів, коли кількість відвідувачів була мінімальною;</li>
+		<li>номери днів, коли кількість відвідувачів була максимальною;</li>
+		<li>загальну кількість клієнтів у робочі дні та окремо загальну кількість днів на вихідних.</li>
+	</ul>
+	<script>
+			function getListDayLessSomeNumb(countCustomerList, someNumb){
+				let listDay = []
+				for (let i = 0; i < countCustomerList.length; i++) {
+					if(countCustomerList[i]<someNumb) listDay.push(i+1)
+				}
+				return listDay
+			}
+			function getDayMinCustomer(countCustomerList){
+				let min = countCustomerList[0] 
+				let numbDay =0
+				for (let i = 1; i < countCustomerList.length; i++) {
+					if(countCustomerList[i]<=min){
+						min=countCustomerList[i]
+						numbDay = i
+					} 
+				}
+				return ++numbDay
+			}
+			function getDayMaxCustomer(countCustomerList){
+				let max = countCustomerList[0] 
+				let numbDay =0
+				for (let i = 1; i < countCustomerList.length; i++) {
+					if(countCustomerList[i]>=max) {
+						max = countCustomerList[i]
+						numbDay = i
+					} 
+				}
+				return ++numbDay
+			}
+			function calcSumCustomerRangeDay(countCustomerList, startDay=1, endDay=7){
+				let sum = 0
+				for (let i= startDay-1; i < endDay; i++) {
+					sum+=countCustomerList[i]
+				}
+				return sum
+			}
+			let countCustomerList = [5, 35, 19, 16, 74, 80, 50]
+			let dayList = getListDayLessSomeNumb(countCustomerList, 20)
+			let dayMinCustomer = getDayMinCustomer(countCustomerList)
+			let dayMaxCustomer = getDayMaxCustomer(countCustomerList)
+			let sumCustomerWorkingDay = calcSumCustomerRangeDay(countCustomerList, 1, 5)
+			let sumCustomerRestDay = calcSumCustomerRangeDay(countCustomerList, 6, 7)
+
+			document.write(`
+			<h5>Відповідь:</h5>
+				<ul>
+					<li>Номери днів, протягом яких кількість відвідувачів була меншою за 20: ${dayList};</li>
+					<li>Номер дня, коли кількість відвідувачів була мінімальною: ${dayMinCustomer};</li>
+					<li>Номер дня, коли кількість відвідувачів була максимальною: ${dayMaxCustomer};</li>
+					<li>Загальна кількість клієнтів у робочі дні : ${sumCustomerWorkingDay} та кількість клієнтів у вихідні дні: ${sumCustomerRestDay}.</li>
+				</ul>
+			`)
+	</script>
+</body>
+</html>

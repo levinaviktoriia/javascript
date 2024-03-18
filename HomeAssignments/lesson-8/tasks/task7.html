@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 7</title>
+</head>
+
+<body>
+	<h1>Задача 7</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано послідовність платіжок протягом року. Знайти сумарну кількість грошей за:
+	</h3>
+	<ol>
+		<li>за весь рік;</li>
+		<li>у першій половині року;</li>
+		<li>у другій половині року;</li>
+		<li>за літо;</li>
+		<li>за ІІ квартал;</li>
+		<li>за парні місяці (з парними номерами);</li>
+		<li>за місяці, які є початковими у сезоні (весна, літо, осінь, зима).</li>
+	</ol>
+	<script>
+		function calcSumBillsRangeMonth(monthlyBillsList, startMonth = 1, endMonth = 12, step = 1) {
+			let sum = 0
+			for (let i = startMonth - 1; i < endMonth; i += step) {
+				sum += monthlyBillsList[i]
+			}
+			return sum
+		}
+		let monthlyBillsList = [1010, 1300, 2504, 2345, 5211, 2343, 1244, 1234, 3421, 4562, 4112, 4217]
+		document.write(`
+			<h5>Відповідь:</h5>
+			<ol>
+				<li>Сумарна кількість грошей за весь рік: ${calcSumBillsRangeMonth(monthlyBillsList, 1, 12)};</li>
+				<li>Сумарна кількість грошей у першій половині року: ${calcSumBillsRangeMonth(monthlyBillsList, 1, 6)};</li>
+				<li>Сумарна кількість грошей у другій половині року: ${calcSumBillsRangeMonth(monthlyBillsList, 7, 12)};</li>
+				<li>Сумарна кількість грошей за літо: ${calcSumBillsRangeMonth(monthlyBillsList, 6, 8)};</li>
+				<li>Сумарна кількість грошей за ІІ квартал: ${calcSumBillsRangeMonth(monthlyBillsList, 4, 6)};</li>
+				<li>Сумарна кількість грошей за парні місяці (з парними номерами): ${calcSumBillsRangeMonth(monthlyBillsList, 2, 12, 2)};</li>
+				<li>Сумарна кількість грошей за місяці, які є початковими у сезоні (весна, літо, осінь, зима): ${calcSumBillsRangeMonth(monthlyBillsList, 3, 12, 3)}.</li>
+			</ol>
+		`)
+	</script>
+</body>
+
+</html>

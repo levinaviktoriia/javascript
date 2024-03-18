@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 5</title>
+</head>
+<body>
+	<h1>Задача 5</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано послідовність оцінок учня. Підрахувати кількість:
+	</h3>
+	<ol>
+		<li>двійок;</li>
+		<li>кількість хороших оцінок (добре, відмінно);</li>
+		<li>кількість оцінок, які нижче середнього.</li>
+	</ol>
+	<script>
+		function getCountScoresInInterval(scoresList, maxScore=12, minScore=1){
+			let s=0
+			for (let score = 0; score < scoresList.length; score++) {
+				if(scoresList[score]<=maxScore && scoresList[score]>=minScore) s++
+			}
+			return s
+		}
+		let studentScoresList = [12, 11, 10, 9, 8, 7, 6, 5, 2, 8, 8, 7, 12, 11, 10];
+		document.write(`
+			<h5>Відповідь:</h5>
+			<ol>
+				<li>Кількість двійок дорівнює ${getCountScoresInInterval(studentScoresList, 2, 2)};</li>
+				<li>Кількість хороших оцінок (добре, відмінно): ${getCountScoresInInterval(studentScoresList, 12, 8)};</li>
+				<li>Кількість оцінок, які нижче середнього: ${getCountScoresInInterval(studentScoresList, 6)}.</li>
+			</ol>
+		`)
+	</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 4</title>
+</head>
+<body>
+	<h1>Задача 4</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано послідовність номерів автомобілів. Підрахувати кількість номерів, які :
+	</h3>
+	<ul>
+		<li>починаються на букву «А»;</li>
+		<li>перша і остання літери співпадають;</li>
+		<li>складаються з більше ніш 5 символів;</li>
+	</ul>
+	<script>
+		function getCarNumbersStartWithLetter(carNumbersList, letter){
+			let s= 0
+			for (let i = 0; i < carNumbersList.length; i++) {
+				if(carNumbersList[i][0] === letter) ++s
+			}
+			return s
+		}
+		function getCarNumbersFirstAndLastEqual(carNumbersList){
+			let s= 0
+			for (let i = 0; i < carNumbersList.length; i++) {
+				if(carNumbersList[i][0] === carNumbersList[i].at(-1)) ++s
+			}
+			return s
+		}
+		function getCarNumbersMoreThanCountSymbol(carNumbersList, countSymbol){
+			let s = 0
+			for (let i = 0; i < carNumbersList.length; i++) {
+				if(carNumbersList[i].length>countSymbol) ++s
+			}
+			return s
+		}
+		let carNumbersList = ['АА1234АС','ВВ5678ЕВ','СМ9012ІС','ТР3456КУ','НО7890НО','АХ1234ІМ','ВІ5678ОР','СТ9012ПА','ТО3456РІ','НР7890ОН','АР1234НЕ','ВО5678ІК','СР9012РС','ТУ3456ВО','НІ7890ПС']
+		document.write(`
+			<h5>Відповідь:</h5>
+			<ul>
+				<li>Кількість номерів, які починаються на букву «А»: ${getCarNumbersStartWithLetter(carNumbersList, 'А')};</li>
+				<li>Кількість номерів, у яких перша і остання літери співпадають: ${getCarNumbersFirstAndLastEqual(carNumbersList)};</li>
+				<li>Кількість номерів, які складаються з більше ніш 5 символів: ${getCarNumbersMoreThanCountSymbol(carNumbersList, 5)}.</li>
+			</ul>
+		`)
+		</script>
+</body>
+</html>

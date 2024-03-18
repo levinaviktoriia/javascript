@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 9</title>
+</head>
+
+<body>
+	<h1>Задача 9</h1>
+	<h3>
+		<!-- Дано: -->
+		Морський бій. Користувач вводить кількість клітинок одновимірного масиву та кількість одиночних кораблів. Комп’ютер довільно розміщує ці одиночні кораблі у масиві по одному у клітинці (якщо у клітинці 0, то клітинка пуста, якщо 1 – то це означає, що там є корабель). Користувач вводить номер клітинки, куди стріляє. Гра продовжується до тих пір, поки не будуть потоплені усі кораблі.
+	</h3>
+	<script>
+		function createNumberListOfZeros(maxNumb) {
+			let arr = []
+			for (let numb = 0; numb < maxNumb; numb++) {
+				arr.push(0)
+			}
+			return arr
+		}
+		function getNumberListRandomFilled(numbList, countNumb) {
+			do{
+				let randomNumb = Math.floor(Math.random() * numbList.length)
+				if (numbList[randomNumb] !== 1) {
+					numbList[randomNumb] = 1
+					countNumb--
+				}
+			}while(countNumb>0)
+			return numbList
+		}
+		function playSeaBattle(countCells, countShips) {
+			let emptyPlayingField = createNumberListOfZeros(countCells)
+			let completedPlayingField = getNumberListRandomFilled(emptyPlayingField, countShips)
+			let s = countShips
+			do{
+				let guessedNumb = parseInt(prompt('Спробуйте потрапити у ціль.')) - 1
+				if (completedPlayingField[guessedNumb] === 1) {
+					completedPlayingField[guessedNumb] = 0
+					s--
+					alert(`Влучили! Залишилось цілей: ${s}`)
+				} else
+					alert('Не влучили. Спробуйте ще раз!')
+			}while(s>0)
+			return document.write('Перемога! Усі кораблі зазнали поразки!')
+		}
+
+		alert('Гра: "Морський бій".')
+		let numberOfCells = parseInt(prompt('Скільки клітинок на полі?'))
+		let numberSingleShips = parseInt(prompt('Скільки одиночних кораблів розмістити на полі?'))
+		playSeaBattle(numberOfCells, numberSingleShips)
+	</script>
+</body>
+
+</html>
