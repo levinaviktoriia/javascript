@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="../js/script.js"></script>
+	<title>Задача 5</title>
+</head>
+
+<body>
+	<h1>Задача 5</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано історію цін на цінні папери за деякий період (згенерувати від 1 до 10000). Підрахувати кількість змін цін.
+	</h3>
+	<script>
+		let securitiesPrices = generateNumbers(20, 1, 10000)
+		document.write(`<h4>Source array:</h4> ${securitiesPrices}`)
+
+		let countNotRepeatPrices = securitiesPrices.reduce(
+			(prevCount, price, index) => price !== securitiesPrices[index - 1] ? prevCount + 1 : prevCount,
+			0
+		)
+		document.write(`<h4>The result:</h4> ${countNotRepeatPrices}`)
+	</script>
+</body>
+
+</html>
