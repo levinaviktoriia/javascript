@@ -19,7 +19,7 @@
 		document.write(`<h4>Source array:</h4> ${securitiesPrices}`)
 
 		let countNotRepeatPrices = securitiesPrices.reduce(
-			(prevCount, price, index) => price !== securitiesPrices[index - 1] ? prevCount + 1 : prevCount,
+			(prevCount, price, index, baseArr) => price !== baseArr[index - 1] ? prevCount + 1 : prevCount,
 			0
 		)
 		document.write(`<h4>The result:</h4> ${countNotRepeatPrices}`)
