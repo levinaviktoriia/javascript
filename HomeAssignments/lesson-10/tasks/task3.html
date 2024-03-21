@@ -21,7 +21,7 @@
 		document.write(`<h4>Source array:</h4> ${securitiesPrices}`)
 
 		let newSecuritiesPrices = securitiesPrices.filter(
-			(price, index) => index === 0 || price > securitiesPrices[index - 1]
+			(price, index, baseArr) => index === 0 || price > baseArr[index - 1]
 		)
 		document.write(`<h4>The resulting array:</h4> ${newSecuritiesPrices}`)
 	</script>
