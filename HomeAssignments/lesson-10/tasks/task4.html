@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="../js/script.js"></script>
 	<title>Задача 4</title>
 </head>
+
 <body>
 	<h1>Задача 4</h1>
 	<h3>
 		<!-- Дано: -->
-		Дано історію цін на цінні папери за деякий період (згенерувати від 1 до 10000). Сформувати новий масив, що міститиме значення цін у відсотках стосовно максимального
+		Дано історію цін на цінні папери за деякий період (згенерувати від 1 до 10000). Сформувати новий масив, що
+		міститиме значення цін у відсотках стосовно максимального
 	</h3>
 	<script>
 		let securitiesPrices = generateNumbers(20, 1, 10000)
@@ -19,9 +22,10 @@
 		const maxSecuritiesPrices = Math.max(...securitiesPrices)
 
 		let securitiesPricesAsPercentage = securitiesPrices.map(
-			(price) => Math.round(price*100/maxSecuritiesPrices)
+			(price) => Math.round(price * 100 / maxSecuritiesPrices)
 		)
 		document.write(`<h4>The resulting array:</h4> ${securitiesPricesAsPercentage}`)
 	</script>
 </body>
+
 </html>

@@ -12,14 +12,15 @@
 	<h1>Задача 2</h1>
 	<h3>
 		<!-- Дано: -->
-		Дано історію цін на цінні папери за деякий період (згенерувати від 1 до 10000). Сформувати новий масив, у якому є номери тільки тих, що більші за 1000 грн.
+		Дано історію цін на цінні папери за деякий період (згенерувати від 1 до 10000). Сформувати новий масив, у якому є
+		номери тільки тих, що більші за 1000 грн.
 	</h3>
 	<script>
 		let securitiesPrices = generateNumbers(20, 1, 10000)
 		document.write(`<h4>Source array:</h4> ${securitiesPrices}`)
 
 		let numbersPricesMoreThanThousand = securitiesPrices.reduce(
-			(prevArr, price, index) => price>1000 ? [...prevArr, index+1] : prevArr, 
+			(prevArr, price, index) => price > 1000 ? [...prevArr, index + 1] : prevArr,
 			[]
 		)
 		document.write(`<h4>The resulting array:</h4> ${numbersPricesMoreThanThousand}`)
