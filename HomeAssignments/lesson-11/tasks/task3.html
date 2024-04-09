@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 3</title>
+</head>
+
+<body>
+	<h1>Задача 3</h1>
+	<h3>
+		<!-- Дано: -->
+		Морський бій. Випадковим чином на двовимірному полі розміром 6*6 розташовується 5 кораблів. Користувач стріляє
+		вказуючи координати. Гра продовжується поки не потоплено усі кораблі або у користувача не закінчаться снаряди.
+	</h3>
+	<script>
+		function createPlayingField(cellsVert, cellsHor, countShips) {
+			let arr = []
+			for (let v = 0; v < cellsVert; v++) {
+				arr.push((new Array(cellsHor)).fill(0))
+			}
+			do {
+				let x = 0 + Math.floor(Math.random() * (cellsHor))
+				let y = 0 + Math.floor(Math.random() * (cellsVert))
+				if (arr[x][y] !== 1) {
+					arr[x][y] = 1
+					countShips--
+				}
+			} while (countShips)
+			return arr
+		}
+
+		function gameOfSeaBattle(cellsVert, cellsHor, countShips, countAttempts) {
+			alert(`Гра - Морський бій. У вас є поле ${cellsVert}*${cellsHor}.`)
+			let playingField = createPlayingField(cellsVert, cellsHor, countShips)
+			do {
+				alert(`Кількість спроб - ${countAttempts}. Кількість кораблів - ${countShips}.`)
+				let shotVert = parseInt(prompt(`Введіть номер комірки по вертикалі (від 1 до ${cellsVert})`)) - 1
+				let shotHor = parseInt(prompt(`Введіть номер комірки по горизонталі (від 1 до ${cellsHor})`)) - 1
+				countAttempts--
+				if (playingField[shotVert][shotHor] === 1) {
+					playingField[shotVert][shotHor] = 0
+					countShips--
+					alert('Влучили!')
+				} else alert('Не влучили!')
+			} while (countAttempts && countShips)
+			if (!countShips) document.write('Ви виграли!')
+			else document.write('Програли!')
+		}
+		gameOfSeaBattle(6, 6, 5, 10)
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 1</title>
+	<style>
+		p{
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+	<h1>Задача 1</h1>
+	<h3>
+		<!-- Дано: -->
+		Знайти суми елементів у вказаній області: 
+	</h3>
+	<div>
+		<p>let arr = [</p>
+			<p>[30, 5, 10, 3, 17, 25, 11],</p>
+			<p>[48, 25, 14, 74, 2, 4, 83],</p>
+			<p>[46, 21, 73, 5, 81, 52, 74],</p>
+			<p>[26, 57, 1, 27, 94, 63, 15],</p>
+		<p>]</p>
+	</div>
+	<script>
+		let arr = [
+			[30, 5, 10, 3, 17, 25, 11],
+			[48, 25, 14, 74, 2, 4, 83],
+			[46, 21, 73, 5, 81, 52, 74],
+			[26, 57, 1, 27, 94, 63, 15],
+		]
+		function calcSumElemInArea(arr, startRow=0, endRow=lastRowNumb, startColumn=0, endColumn=lastColNumb, stepRow=1, stepColumn=1){
+			let sum = 0
+			for (let rowNumb = startRow; rowNumb <= endRow; rowNumb+=stepRow) {
+				for (let columnNumb = startColumn; columnNumb <= endColumn; columnNumb+=stepColumn) {
+					sum+= arr[rowNumb][columnNumb]
+				}
+			}
+			return sum
+		}
+		let halfRowNumb = Math.floor(arr.length/2)
+		let lastRowNumb = arr.length - 1
+		let halfColumnNumb = Math.floor(arr[0].length/2)
+		let lastColNumb = arr[0].length - 1
+
+		// 1) Номери рядків від 0 до половини, стовпці від 0 до половини
+		let firstSum = calcSumElemInArea(arr, 0, halfRowNumb, 0, halfColumnNumb)
+		// 2) Номери рядків від 0 до половини, стовпці від половини до кінця
+		let secSum = calcSumElemInArea(arr, 0, halfRowNumb, halfColumnNumb)
+		// 3) Номери рядків від половини до кінця, стовпці від 0 до половини
+		let thirdSum = calcSumElemInArea(arr, halfRowNumb, lastRowNumb, 0, halfColumnNumb)
+		// 4) Номери рядків від половини до кінця , стовпці від половини до кінця
+		let fourthSum = calcSumElemInArea(arr, halfRowNumb, lastRowNumb, halfColumnNumb)
+
+		// 5) Суму парних рядків
+		let sumEvenRow = calcSumElemInArea(arr, 1, lastRowNumb, 0, lastColNumb, 2)
+		// 6) Суму непарних стовпців
+		let sumOddColumn = calcSumElemInArea(arr, 0, lastRowNumb, 0, lastColNumb, 1, 2)
+
+		// 7) У парних рядках – непарні стовпці, у непарних – парні
+		let sumOddColInEvenRow = calcSumElemInArea(arr, 1, lastRowNumb, 0, lastColNumb, 2, 2)
+		let sumEvenColInOddRow = calcSumElemInArea(arr, 0, lastRowNumb, 1, lastColNumb, 2, 2)
+		let sumRes = sumOddColInEvenRow + sumEvenColInOddRow
+
+		document.write(`
+		<ol>
+			<li>Номери рядків від 0 до половини, стовпці від 0 до половини - ${firstSum};</li>
+			<li>Номери рядків від 0 до половини, стовпці від половини до кінця - ${secSum};</li>
+			<li>Номери рядків від половини до кінця, стовпці від 0 до половини - ${thirdSum};</li>
+			<li>Номери рядків від половини до кінця , стовпці від половини до кінця - ${fourthSum};</li>
+			<li>Парних рядків - ${sumEvenRow};</li>
+			<li>Непарних стовпців - ${sumOddColumn};</li>
+			<li>У парних рядках – непарні стовпці, у непарних – парні = ${sumRes}.</li>
+		</ol>
+		`)
+	</script>
+</body>
+</html>
