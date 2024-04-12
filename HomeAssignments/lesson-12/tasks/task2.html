@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 2</title>
+</head>
+<body>
+	<h1>Задача 2</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано масив 30 випадкових цілих чисел. Підрахувати скільки було обмінів та порівнянь чисел під час сортування змішуванням.
+	</h3>
+	<script>
+		let numbers = [-359,109,-192,110,303,-393,354,44,-330,98,-441,476,246,-265,97,-50,-271,-51,278,25,154,444,171,241,90,-28,-427,-91,268,-242]
+		document.write(`<p><b>Початковий масив:</b> ${numbers}</p>`)
+
+		let counterExchange = 0
+		let counterCompare = 0
+		let leftIndex = 0
+      let rightIndex = numbers.length - 1
+
+      while (leftIndex < rightIndex) {
+        let changed = false
+        for (let i = leftIndex + 1; i <= rightIndex; i++) {
+			counterCompare++
+          if (numbers[i - 1] > numbers[i]) {
+            let temp = numbers[i - 1]
+            numbers[i - 1] = numbers[i]
+            numbers[i] = temp
+            changed = true
+				counterExchange++
+          }
+        }
+        rightIndex--
+        if (!changed) break
+
+        changed = false
+        for (let i = rightIndex; i > leftIndex; i--) {
+          if (numbers[i - 1] > numbers[i]) {
+				counterCompare++
+            let temp = numbers[i - 1]
+            numbers[i - 1] = numbers[i]
+            numbers[i] = temp
+            changed = true
+				counterExchange++
+          }
+        }
+        leftIndex++
+        if (!changed) break
+      }
+		
+		document.write(`	
+		<div>
+			<p><b>Кількість порівнянь:</b> ${counterCompare};</p>
+			<p><b>Кількість обмінів:</b> ${counterExchange}.<br></p>
+			<p><b>Упорядкований масив:</b> ${numbers}.</p>
+		</div>`)
+	</script>
+</body>
+</html>

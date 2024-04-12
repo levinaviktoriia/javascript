@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 3</title>
+</head>
+
+<body>
+	<h1>Задача 3</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано масив 30 випадкових цілих чисел. Підрахувати скільки було обмінів та порівнянь чисел під час сортування
+		включеннями.
+	</h3>
+	<script>
+		let numbers = [-359, 109, -192, 110, 303, -393, 354, 44, -330, 98, -441, 476, 246, -265, 97, -50, -271, -51, 278, 25, 154, 444, 171, 241, 90, -28, -427, -91, 268, -242]
+		document.write(`<p><b>Початковий масив:</b> ${numbers}</p>`)
+
+		let counterExchange = 0
+		let counterCompare = 0
+		for (let k = 1; k < numbers.length; k++) {
+			let currentElement = numbers[k]
+			i = k - 1
+			while (i >= 0 && numbers[i] > currentElement) {
+				counterCompare++
+				numbers[i + 1] = numbers[i]
+				counterExchange++
+				i--
+			}
+			numbers[i + 1] = currentElement
+			counterExchange++
+		}
+
+		document.write(`	
+		<div>
+			<p><b>Кількість порівнянь:</b> ${counterCompare};</p>
+			<p><b>Кількість обмінів:</b> ${counterExchange}.<br></p>
+			<p><b>Упорядкований масив:</b> ${numbers}.</p>
+		</div>`)
+	</script>
+</body>
+
+</html>

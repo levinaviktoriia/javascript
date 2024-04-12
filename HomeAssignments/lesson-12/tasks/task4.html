@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 4</title>
+</head>
+<body>
+	<h1>Задача 4</h1>
+	<h3>
+		<!-- Дано: -->
+		Для розглянутих методів сортування спробувати вивести етапи сортування шляхом виведення відповідних таблиць за зразком. Тобто кожного разу після обміну елементів вивести поточний стан масиву на екран.
+	</h3>
+	<script>
+		let numbers = [3, 5, 1, 4, 2]
+		document.write(`
+			<p><b>Початковий масив:</b> [${numbers}]</p>
+			<p><b>Сортування бульбашкою (Bubble Sort):</b></p>
+		`)
+		let sortBubble = [...numbers]
+		let changed 
+		do {
+			changed = false
+			for (let i = 1; i < sortBubble.length; i++) {
+				if (sortBubble[i] < sortBubble[i - 1]){
+					let temp = sortBubble[i- 1]
+					sortBubble[i- 1] = sortBubble[i]
+					sortBubble[i] = temp
+					changed = true
+					document.write(`[${sortBubble}]<br>`)
+				}
+			}
+		} while(changed)
+
+		// -----------------------------------------------------------------------
+		document.write('<p><b>Сортування змішуванням (Cocktail sort):</b></p>')
+		let sortCocktail = [...numbers]
+		let leftIndex = 0
+      let rightIndex = sortCocktail.length - 1
+      while (leftIndex < rightIndex) {
+        let changed = false
+        for (let i = leftIndex + 1; i <= rightIndex; i++) {
+          if (sortCocktail[i - 1] > sortCocktail[i]) {
+            let temp = sortCocktail[i - 1]
+            sortCocktail[i - 1] = sortCocktail[i]
+            sortCocktail[i] = temp
+            changed = true
+				document.write(`[${sortCocktail}]<br>`)
+          }
+        }
+        rightIndex--
+        if (!changed) break
+
+        changed = false
+        for (let i = rightIndex; i > leftIndex; i--) {
+          if (sortCocktail[i - 1] > sortCocktail[i]) {
+            let temp = sortCocktail[i - 1]
+            sortCocktail[i - 1] = sortCocktail[i]
+            sortCocktail[i] = temp
+            changed = true
+				document.write(`[${sortCocktail}]<br>`)
+          }
+        }
+        leftIndex++
+        if (!changed) break
+      }
+
+		// -----------------------------------------------------------------------
+		document.write('<p><b>Сортування включенням (Insertion sort):</b></p>')
+		let sortInsertion = [...numbers]
+		for (let k = 1; k < sortInsertion.length; k++) {
+			let currentElement = sortInsertion[k]
+			i = k - 1
+			while (i >= 0 && sortInsertion[i] > currentElement) {
+				sortInsertion[i + 1] = sortInsertion[i]
+				document.write(`[${sortInsertion}]<br>`)
+				i--
+			}
+			sortInsertion[i + 1] = currentElement
+			document.write(`[${sortInsertion}]<br>`)
+		}
+		// -----------------------------------------------------------------------
+		document.write('<p><b>Сортування вибором (Selection sort):</b></p>')
+		let sortSelection = [...numbers]
+		let prevLastIndex = sortSelection.length - 2
+		for (let i = 0; i <= prevLastIndex; i++) {
+			let minIndex = i
+			for (let j = i+1; j < sortSelection.length; j++) {
+				if(sortSelection[j]<sortSelection[minIndex]) minIndex=j	
+			}
+			if(i!==minIndex){
+				let temp = sortSelection[i]
+				sortSelection[i]=sortSelection[minIndex]
+				sortSelection[minIndex]=temp
+				document.write(`[${sortSelection}]<br>`)
+			}
+		}
+	</script>
+</body>
+</html>

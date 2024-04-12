@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 6</title>
+</head>
+
+<body>
+	<h1>Задача 6</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано масив імен. Застосовуючи відповідне сортування та бінарний пошук визначити, чи є у масиві ім’я довжиною 5
+		символів і під яким індексом.
+	</h3>
+	<script>
+		let userNames = ["Olga", "John", "Anna", "Michael", "Emily", "David", "Sophia", "Daniel", "Emma", "James", "Olivia", "Matthew", "Isabella", "Andrew", "Ava", "Joseph", "Mia", "William", "Charlotte", "Alexander"]
+		document.write(`<p><b>Початковий масив:</b> ${userNames}</p>`)
+		let lengthOfName = 5
+
+		userNames.sort((a, b) => a.length - b.length)
+		document.write(`<p><b>Упорядкований масив:</b> ${userNames}.</p>`)
+
+		function getIndexSearchElementLength(arr, searchElementLength) {
+			let start = 0
+			let end = arr.length - 1
+			while (start <= end) {
+				const middle = Math.floor((start + end) / 2)
+				if (arr[middle].length === searchElementLength) return middle
+				if (arr[middle].length < searchElementLength) start = middle + 1
+				if (arr[middle].length > searchElementLength) end = middle - 1
+			}
+			return -1
+		}
+		let nameIndex = getIndexSearchElementLength(userNames, lengthOfName)
+
+		if (nameIndex !== -1) document.write(`Ім'я довжиною ${lengthOfName} символів знаходиться у масиві під індексом ${nameIndex}.`)
+		else document.write(`Ім'я довжиною ${lengthOfName} символів у масиві не знайдено.`)
+	</script>
+</body>
+
+</html>
