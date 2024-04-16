@@ -73,18 +73,18 @@
 		console.log('Початковий масив:');
 		console.log(dataList);
 
-		// Загальну вартість (нові ціни - price)
+		// 1) Знайти загальну вартість (нові ціни - price)
 		let totalNewPrice = dataList.reduce((prevSum, product) => (prevSum + product.price), 0)
 
-		// Знайти кількість товарів, у яких ціна зменшилась (price < old_price).
+		// 2) Знайти кількість товарів, у яких ціна зменшилась (price < old_price).
 		let numbProductWithReducedPrices = dataList.reduce((prevSum, product) => (product.price < product.old_price ? prevSum + 1 : prevSum), 0)
 
-		// Товари, які доступні (sell_status:"available")
+		// 3) Товари, які доступні (sell_status:"available")
 		let availableProducts = dataList.filter((product) => product.sell_status === 'available')
 		console.log('Товари, які доступні:');
 		console.log(availableProducts);
 
-		// Cформувати новий список об'єктів тільки доступних для продажу товарів, які міститимуть тільки ідентифікатор товару (id), нову ціну (price), стару ціну (old_price), та ціну у доларах (usd_price)
+		// 4) Cформувати новий список об'єктів тільки доступних для продажу товарів, які міститимуть тільки ідентифікатор товару (id), нову ціну (price), стару ціну (old_price), та ціну у доларах (usd_price)
 		let requiredData = ['id', 'price', 'old_price', 'usd_price']
 		let availableProductsUpdatedData = dataList.reduce((prevList, product) => {
 			if(product.sell_status === 'available')
