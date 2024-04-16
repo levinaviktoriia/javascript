@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 1</title>
+</head>
+
+<body>
+	<h1>Задача 1</h1>
+	<h3>
+		<!-- Дано: -->
+		Описати масив об’єктів – сайтів розроблених компанією з такими властивостями:
+	</h3>
+	<ul>
+		<li>назва компанії на час розробки (назву періодично змінюють)</li>
+		<li>власник компанії</li>
+		<li>споснсори (масив спонсорів)
+			<ul>
+				<li>прізвище спонсора</li>
+				<li>ім’я спонсора</li>
+				<li>сума вкладень спонсора</li>
+			</ul>
+		</li>
+		<li>рік випуску</li>
+		<li>вартість сайту</li>
+	</ul>
+	<h3>Знайти:</h3>
+	<script>
+		let websitesList = [
+			{
+				companyName: 'Company 1',
+				owner: 'Oliver Martinez',
+				sponsors: [
+					{
+						secondName: 'Smith',
+						firstName: 'John',
+						investmentAmount: 50000,
+					},
+					{
+						secondName: 'Brown',
+						firstName: 'Emily',
+						investmentAmount: 70000,
+					},
+				],
+				yearOfProduction: 1999,
+				cost: 7000,
+			},
+			{
+				companyName: 'Company 2',
+				owner: 'Alexander Wilson',
+				sponsors: [
+					{
+						secondName: 'Ronald',
+						firstName: 'Jackson',
+						investmentAmount: 50000,
+					},
+					{
+						secondName: 'Miller',
+						firstName: 'Liam',
+						investmentAmount: 42000,
+					},
+				],
+				yearOfProduction: 2005,
+				cost: 9900,
+			},
+			{
+				companyName: 'Company 3',
+				owner: 'Benjamin Taylor',
+				sponsors: [
+					{
+						secondName: 'Alle',
+						firstName: 'Andrew',
+						investmentAmount: 15600,
+					},
+					{
+						secondName: 'Garcia',
+						firstName: 'William',
+						investmentAmount: 30000,
+					},
+					{
+						secondName: 'Anderson',
+						firstName: 'Henry',
+						investmentAmount: 70000,
+					},
+				],
+				yearOfProduction: 2002,
+				cost: 34300,
+			},
+			{
+				companyName: 'Company 4',
+				owner: 'Amelia Miller',
+				sponsors: [
+					{
+						secondName: 'Bon',
+						firstName: 'Alex',
+						investmentAmount: 100000,
+					},
+					{
+						secondName: 'Jones',
+						firstName: 'Evelyn',
+						investmentAmount: 50000,
+					},
+				],
+				yearOfProduction: 2013,
+				cost: 41000,
+			},
+			{
+				companyName: 'Company 5',
+				owner: 'Mia White',
+				sponsors: [
+					{
+						secondName: 'Lennon',
+						firstName: 'Carl',
+						investmentAmount: 13000,
+					},
+					{
+						secondName: 'Davis',
+						firstName: 'Ethan',
+						investmentAmount: 19000,
+					},
+				],
+				yearOfProduction: 1996,
+				cost: 5900,
+			},
+		]
+
+		// Знайти загальну вартість усіх сайтів
+		let totalCostWebsites = websitesList.reduce((prevTotalCost, website) => (prevTotalCost + website.cost), 0)
+
+		
+		// Знайти кількість сайтів, що було зроблено між 2000 та 2009 рр.
+		let numberWebsitesInThePeriod = websitesList.reduce((prevNumb, website) => (website.yearOfProduction > 2000 && website.yearOfProduction < 2009 ? prevNumb + 1 : prevNumb), 0)
+
+
+		// Знайти кількість сайтів, де сума спонсорських вкладень була більшою за 100000
+		let numberWebsitesInvestmentMore100000 = websitesList.reduce((prevNumb, website) => 
+			(website.sponsors.reduce((prevSum, sponsor) => (prevSum + sponsor.investmentAmount), 0) > 100000 ? prevNumb + 1 : prevNumb),
+		0)
+
+
+		//Створити загальний список усіх спонсорів (поки можуть повторюватись, просто зібрати усі у масив)
+		let listOfSponsors = []
+		for (const website of websitesList) {
+			for (const sponsor of website.sponsors) {
+				listOfSponsors.push(sponsor.firstName + ' ' + sponsor.secondName)
+			}
+		}
+
+
+		// Знайти рік, коли прибуток був найбільшим
+		let yearWithHighestProfit = 0
+		let maxProfit = -Infinity
+		for (const website of websitesList) {
+			if (maxProfit < website.cost) {
+				maxProfit = website.cost
+				yearWithHighestProfit = website.yearOfProduction
+			}
+		}
+
+
+		// Упорядкувати список за спаданням прибутку
+		// 1 спосіб
+		// let sortWebsitesList = websitesList.sort((a,b) => b.cost - a.cost)
+
+		// 2 спосіб
+		let sortWebsitesList = JSON.parse(JSON.stringify(websitesList))
+		for (let i = 0; i < sortWebsitesList.length - 1; i++) {
+			let indexMaxProfit = i
+			for (let j = i + 1; j < sortWebsitesList.length; j++) {
+				if (sortWebsitesList[j].cost > sortWebsitesList[indexMaxProfit].cost) indexMaxProfit = j
+			}
+			if (i !== indexMaxProfit) {
+				let temp = sortWebsitesList[i]
+				sortWebsitesList[i] = sortWebsitesList[indexMaxProfit]
+				sortWebsitesList[indexMaxProfit] = temp
+			}
+		}
+		console.log('Cписок за спаданням прибутку')
+		console.log(sortWebsitesList)
+
+
+		// Створити 2 окремих списки з копіями об’єктів, що містять сайти з вартість до 10000
+		let websitesCostingLessThan10000 = websitesList.reduce((prevList, website) => (website.cost < 10000 ? [...prevList, website] : prevList), [])
+		console.log('Сайти вартістю до 10000')
+		console.log(websitesCostingLessThan10000)
+
+		// і більше 10000
+		let websitesCostingMore10000 = websitesList.reduce((prevList, website) => (website.cost > 10000 ? [...prevList, website] : prevList), [])
+		console.log('Сайти вартістю більше 10000')
+		console.log(websitesCostingMore10000)
+
+
+		document.write(`
+		<ol>
+			<li>Загальну вартість усіх сайтів - <b>${totalCostWebsites}</b>;</li>
+			<li>Кількість сайтів, що було зроблено між 2000 та 2009 рр. - <b>${numberWebsitesInThePeriod}</b>;</li>
+			<li>Кількість сайтів, де сума спонсорських вкладень була більшою за 100000 - <b>${numberWebsitesInvestmentMore100000}</b>;</li>
+			<li>Створити загальний список усіх спонсорів (поки можуть повторюватись, просто зібрати усі у масив) <br> - <b>${listOfSponsors}</b>;</li>
+			<li>Знайти рік, коли прибуток був найбільшим - <b>${yearWithHighestProfit}</b>;</li>
+			<li>Упорядкувати список за спаданням прибутку - <b>у консолі</b>;</li>
+			<li>Створити 2 окремих списки з копіями об’єктів, що містять сайти з вартість до 10000 і більше 10000 - <b>у консолі.</b></li>
+		</ol>
+		`)
+	</script>
+	
+</body>
+
+</html>
