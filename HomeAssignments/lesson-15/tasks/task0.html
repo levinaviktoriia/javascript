@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 0</title>
+</head>
+<body>
+	<h1>Задача 0</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано два об’єкта. Обидва містять масив цілих чисел. При цьому у одному з них є функція знаходження суми, а у іншому – функція для знаходження добутку тих, які знаходяться між заданими мінімальним і максимальних значенням. Використати обидва методи стосовно обидвох об’єктів (використати call, apply)
+	</h3>
+	<script>
+		let firstObject = {
+			numbers: [3,4,13,6,10,5],
+			calcSum: function(){
+				return this.numbers.reduce((prevSum, numb) => prevSum + numb)
+			}
+		}
+		let secondObject = {
+			numbers: [10,3,4,5,15,2],
+			calcProduct: function(minNumb, maxNumb){
+				return this.numbers.reduce((prevProd, numb) => (
+					numb>minNumb && numb<maxNumb ? prevProd*numb : prevProd
+				), 1)
+			}
+		}
+		
+		let sumFirstObj = firstObject.calcSum()
+		let sumSecondObj = firstObject.calcSum.call(secondObject)
+
+		let productFirstObj = secondObject.calcProduct.apply(firstObject, [9, 20])
+		let productSecondObj = secondObject.calcProduct(0, 10)
+
+		document.write(`
+		<ul>
+			<li>Сума першого об’єкта: ${sumFirstObj};</li>
+			<li>Сума другого об’єкта: ${sumSecondObj};</li>
+			<li>Добуток значень першого об’єкта(у проміжку від 9 до 20): ${productFirstObj};</li>
+			<li>Добуток значень другого об’єкта(у проміжку від 0 до 10): ${productSecondObj}.</li>
+		</ul>
+		`)
+	</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 4</title>
+	<style>
+		table{
+			width: 100%;
+			margin-bottom: 20px;
+			border: 1px solid #000;
+		}
+		td{
+			border: 1px solid #000;
+		}
+		div{
+			width: 300px;
+		}
+		img{
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<h1>Задача 4</h1>
+	<h3>
+		<!-- Дано: -->
+		Розробити клас Baner
+	</h3>
+	<table>
+		<tr>
+			<td>Поля(властивості)</td>
+			<td>Масив об’єктів ( графічних зображень та посилань на сайти)</td>
+		</tr>
+		<tr>
+			<td rowspan="2">Методи (дії)</td>
+			<td>Метод випадкового вибору об’єкта (графічного зображення та посилання)</td>
+		</tr>
+		<tr>
+			<td>Метод виведення випадкового банера</td>
+		</tr>
+	</table>
+	<script>
+		class Banner{
+			constructor(banners){
+				this.banners = banners // Масив об’єктів ( графічних зображень та посилань на сайти)
+			}
+
+			// Метод випадкового вибору об’єкта (графічного зображення та посилання)
+			chooseRandomObject(){
+				return Math.floor(Math.random()* (this.banners.length))
+			}
+			// Метод виведення випадкового банера
+			toString(){
+				let numbObject = this.chooseRandomObject()
+				return `
+					<div> <a href="${this.banners[numbObject].link}">
+						<img src="../img/${this.banners[numbObject].image}" alt="Image">
+					</a> </div>`
+			}
+		}
+		let listOfBanners =[
+			{
+				image: 'google.png',
+				link: 'https://www.google.com/?authuser=0',
+			},
+			{
+				image: 'figma.png',
+				link: 'https://www.figma.com/',
+			},
+			{
+				image: 'steam.png',
+				link: 'https://store.steampowered.com/',
+			},
+			{
+				image: 'rozetka.png',
+				link: 'https://rozetka.com.ua/',
+			},
+		]
+		let banner = new Banner(listOfBanners)
+		document.write(banner)
+	</script>
+</body>
+</html>

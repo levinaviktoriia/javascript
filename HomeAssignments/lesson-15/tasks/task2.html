@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 2</title>
+	<style>
+		table{
+			width: 100%;
+			margin-bottom: 20px;
+			border: 1px solid #000;
+		}
+		td{
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+	<h1>Задача 2</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити об’єкт «Авто». 
+	</h3>
+	<table>
+		<tr>
+			<td rowspan="5">Поля(властивості)</td>
+			<td>Марка</td>
+		</tr>
+		<tr>
+			<td>Розмір бака</td>
+		</tr>
+		<tr>
+			<td>Кількість наявних літрів</td>
+		</tr>
+		<tr>
+			<td>Кількість місць</td>
+		</tr>
+		<tr>
+			<td>Кількість пасажирів</td>
+		</tr>
+		<tr>
+			<td rowspan="4">Методи (дії)</td>
+			<td>Заправка на вказану кількість літрів</td>
+		</tr>
+		<tr>
+			<td>Виведення кількості пасажирів</td>
+		</tr>
+		<tr>
+			<td>Додавання пасажирів</td>
+		</tr>
+		<tr>
+			<td>Висадка пасажирів</td>
+		</tr>
+	</table>
+	<script>
+		let auto = {
+			carBrand: 'Audi',
+			tankCapacity: 60,
+			availableLitres: 15,
+			numbOfSeats: 5,
+			numbPassengers: 2,
+			
+			// Заправка на вказану кількість літрів
+			refuelingTheCar: function (numbLitres) {
+				let res =''
+				let newLiterVolume = this.availableLitres + numbLitres
+				if(newLiterVolume <= this.tankCapacity) res =`Ваша машина заправлена на ${ numbLitres } літрів. У баку ${newLiterVolume} літрів палива.`
+				else res = 'Заправка неможлива.'
+				return res
+			},
+			// Виведення кількості пасажирів
+			toString: function(){
+				return `Кількість пасажирів в автомобілі: ${ this.numbPassengers}. <br>`
+			},
+			// Додавання пасажирів
+			addPassengers: function(numbNewPassengers){
+				if(this.numbPassengers+numbNewPassengers <= this.numbOfSeats) this.numbPassengers += numbNewPassengers
+			},
+			// Висадка пасажирів
+			disembarkationPassengers : function(numbDisembarkationPassengers){
+				if(this.numbPassengers-numbDisembarkationPassengers >= 0) this.numbPassengers -= numbDisembarkationPassengers
+			}
+		}
+
+		document.write(`${auto.refuelingTheCar(30)}<br>`)
+		auto.addPassengers(2)
+		document.write(auto)
+		auto.disembarkationPassengers(3)
+		document.write(auto)
+	</script>
+</body>
+
+</html>

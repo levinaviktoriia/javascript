@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 5</title>
+	<style>
+		table{
+			width: 100%;
+			margin-bottom: 20px;
+			border: 1px solid #000;
+		}
+		td{
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+	<h1>Задача 5</h1>
+	<h3>
+		<!-- Дано: -->
+		Розробити клас «Керівник танців»
+	</h3>
+	<table>
+		<tr>
+			<td rowspan="2">Поля(властивості)</td>
+			<td>Масив імен хлопців</td>
+		</tr>
+		<tr>
+			<td>Масив імен дівчат</td>
+		</tr>
+		<tr>
+			<td rowspan="4">Методи (дії)</td>
+			<td>Метод випадкового вибору імені хлопця</td>
+		</tr>
+		<tr>
+			<td>Метод випадкового вибору імені дівчини</td>
+		</tr>
+		<tr>
+			<td>Метод виведення пари для танців</td>
+		</tr>
+		<tr>
+			<td>Метод run , який ініціює через кожні 5 секунд виведення нової пари для танців</td>
+		</tr>
+	</table>
+	<script>
+		class DanceTeacher{
+			constructor(namesOfBoys, namesOfGirls){
+				this.namesOfBoys = namesOfBoys // Масив імен хлопців
+				this.namesOfGirls = namesOfGirls // Масив імен дівчат
+			}
+		
+			// Метод випадкового вибору імені хлопця
+			getRandomNameOfBoy(){
+				let numbRandom = Math.floor(Math.random()* this.namesOfBoys.length)
+				return this.namesOfBoys[numbRandom]
+			}
+			// Метод випадкового вибору імені дівчини
+			getRandomNameOfGirl(){
+				let numbRandom = Math.floor(Math.random()* this.namesOfGirls.length)
+				return this.namesOfGirls[numbRandom]
+			}
+			// Метод виведення пари для танців
+			showPairForDancing(){
+				alert(`${this.getRandomNameOfBoy()} and ${this.getRandomNameOfGirl()}.`)
+			}
+			// Метод run, який ініціює через кожні 5 секунд виведення нової пари для танців
+			run(){
+				setInterval(()=>{
+					this.showPairForDancing()
+				}, 5000)
+			}
+		}
+
+		const namesOfBoys = [  "James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph", "Charles", "Thomas", "Daniel", "Matthew", "Christopher", "Andrew", "Joshua", "Kevin", "Brian", "George", "Edward", "Steven"]
+		const namesOfGirls = ["Emma", "Olivia", "Ava", "Isabella", "Sophia", "Mia", "Charlotte", "Amelia", "Harper", "Evelyn", "Abigail", "Emily", "Elizabeth", "Mila", "Ella", "Avery", "Scarlett", "Sofia", "Chloe", "Victoria"]
+		let danceClass = new DanceTeacher(namesOfBoys, namesOfGirls)
+		danceClass.run()
+	</script>
+</body>
+</html>

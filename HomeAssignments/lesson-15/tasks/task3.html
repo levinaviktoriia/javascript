@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 3</title>
+	<style>
+		table{
+			width: 100%;
+			margin-bottom: 20px;
+			border: 1px solid #000;
+		}
+		td{
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+	<h1>Задача 3</h1>
+	<h3>
+		<!-- Дано: -->
+		Розробити клас MultChecker для перевірки таблиці множення
+	</h3>
+	<table>
+		<tr>
+			<td rowspan="3">Поля(властивості)</td>
+			<td>Число, яке перевіряємо (наприклад, перевірка частини таблиці множення на 7)</td>
+		</tr>
+		<tr>
+			<td>Кількість правильних відповідей</td>
+		</tr>
+		<tr>
+			<td>Кількість неправильних відповідей</td>
+		</tr>
+		<tr>
+			<td rowspan="3">Методи (дії)</td>
+			<td>Генерування прикладу (метод випадковим чином визначає друге число, перше число фіксоване)</td>
+		</tr>
+		<tr>
+			<td>Перевірка правильності вказаної відповіді</td>
+		</tr>
+		<tr>
+			<td>render - виведення інформації про тестування на екран</td>
+		</tr>
+	</table>
+	<script>
+		class MultChecker{
+			constructor(number){
+				this.number = number
+				this.countCorrectAnswers = 0
+				this.countIncorrectAnswers = 0
+			}
+
+			// Генерування прикладу (метод випадковим чином визначає друге число, перше число фіксоване)
+			generatingAnExample(minNumb = 1, maxNumb = 10){
+				let randomNumb = minNumb + Math.floor(Math.random()*(maxNumb-minNumb+1))
+				return {
+					result: this.number * randomNumb,
+					string: `${this.number} * ${randomNumb}`
+				}
+			}
+
+			// Перевірка правильності вказаної відповіді
+			checkAnswers(){
+				let nextExample = true
+				do{
+					let example = this.generatingAnExample()
+					let userAnswer = parseInt(prompt(`Приклад: ${example.string}. Введіть відповідь.`, '0'))
+					if(example.result === userAnswer) this.countCorrectAnswers++
+					else this.countIncorrectAnswers++
+					nextExample = confirm('Продовжити далі?')
+				}while(nextExample)
+			}
+			
+			// render - виведення інформації про тестування на екран
+			render(){
+				return `
+					<div>
+						<p>Кількість правильних відповідей: ${this.countCorrectAnswers};</p>
+						<p>Кількість неправильних відповідей: ${this.countIncorrectAnswers}.</p>
+					</div>
+				` 
+			}
+		}
+
+		let multiplicationTableFor6 = new MultChecker(6)
+		multiplicationTableFor6.checkAnswers()
+		document.write(multiplicationTableFor6.render())
+	</script>
+</body>
+</html>

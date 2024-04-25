@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 1</title>
+	<style>
+		table{
+			width: 100%;
+			margin-bottom: 20px;
+			border: 1px solid #000;
+		}
+		td{
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+	<h1>Задача 1</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити об’єкт «Тир». У масиві зберігаються 1, якщо у цьому квадраті є заєць і 0 в іншому випадку.
+	</h3>
+	<table>
+		<tr>
+			<td>Поля(властивості)</td>
+			<td>Масив, у якому зберігається поле з зайцями</td>
+		</tr>
+		<tr>
+			<td rowspan="2">Методи (дії)</td>
+			<td>Метод пострілу (задається позиція пострілу)</td>
+		</tr>
+		<tr>
+			<td>Виведення ігрового поля</td>
+		</tr>
+	</table>
+	<script>
+		let shootingGallery = {
+			field: [1, 0, 0, 1, 1, 0, 0, 0, 1, 0],
+
+			// Метод пострілу (задається позиція пострілу)
+			shotInTheField: function(userShot){
+				let res = ''
+				if(this.field[userShot]===1){
+					res = 'Потрапили у ціль!'
+					this.field[userShot] = 0
+				}else res = 'Не влучили!'
+				return res
+			},
+			// Виведення ігрового поля
+			toString: function(){
+				return `Ігрове поле: ${this.field}`
+			}
+		}
+
+		let userShot = parseInt(prompt('Введіть позицію для пострілу (від 1 до 10).', '0')) - 1
+		alert(shootingGallery.shotInTheField(userShot))
+		document.write(shootingGallery)
+	</script>
+</body>
+
+</html>
