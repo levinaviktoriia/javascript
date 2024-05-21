@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 2</title>
+</head>
+
+<body>
+	<h1>Задача 2</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити клас TMoney для роботи з грошовими сумами. Сума повинна зберігатися у вигляді доларового еквіваленту.
+		Реалізувати методи додавання/вилучення грошової маси, вказуючи необхідну суму у гривнях, та визначення курсу
+		долара, при якому сума у гривнях збільшиться на 100. Курс долара зберігати в окремому полі.
+	</h3>
+	<p></p>
+	<script>
+		class TMoney {
+			#amountUSD
+			get AmountUSD() {
+				return this.#amountUSD
+			}
+			set AmountUSD(newAmount) {
+				if (newAmount < 0) throw new Error('Сума не може бути від"ємною.')
+				this.#amountUSD = newAmount
+			}
+			#rateUSD
+			get RateUSD() {
+				return this.#rateUSD
+			}
+			set RateUSD(newRateUSD) {
+				if (newRateUSD <= 0) throw new Error('Курс долара є некоректним.')
+				this.#rateUSD = newRateUSD
+			}
+
+			constructor(amountUSD, rateUSD) {
+				this.AmountUSD = amountUSD
+				this.RateUSD = rateUSD
+			}
+			addUANToMoney(val) {
+				if (val <= 0) throw new Error('Введено некоректну кількість грошей.')
+				this.AmountUSD += this.convertUANToUSD(val)
+			}
+			withdrawalUANFromMoney(val) {
+				if (val <= 0) throw new Error('Введено некоректну кількість грошей.')
+				let withdrawalAmountInUSD = this.convertUANToUSD(val)
+				if (this.AmountUSD < withdrawalAmountInUSD) throw new Error('Недостатньо коштів.')
+				this.AmountUSD -= withdrawalAmountInUSD
+			}
+			getIncreasedRateUSD() {
+				return (this.convertUSDToUAN(this.AmountUSD) + 100) / this.AmountUSD
+			}
+			convertUSDToUAN(val) {
+				return val * this.RateUSD
+			}
+			convertUANToUSD(val) {
+				return val / this.RateUSD
+			}
+			toString() {
+				return `
+				<p>На рахунку: ${this.AmountUSD.toFixed(2)} USD;</p> 
+				<p>Курс долара - ${this.RateUSD};</p> 
+				<p>Курс долара, при якому сума у гривнях збільшиться на 100 грн - ${this.getIncreasedRateUSD().toFixed(4)}.</p>
+				`
+			}
+		}
+
+
+		let wallet = new TMoney(100, 39.6799)
+		document.write(`<b>Початкові дані:</b> ${wallet} <br>`)
+		wallet.addUANToMoney(1000)
+		document.write(`<b>Додали 1000 грн:</b> ${wallet} <br>`)
+		wallet.withdrawalUANFromMoney(390)
+		document.write(`<b>Вилучили 390 грн:</b> ${wallet} <br>`)
+	</script>
+</body>
+
+</html>

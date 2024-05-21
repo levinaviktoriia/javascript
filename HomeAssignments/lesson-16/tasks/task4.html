@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 4</title>
+</head>
+
+<body>
+	<h1>Задача 4</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити клас TBankomat, який моделює роботу банкомата. Клас повинен містити поля для зберігання кількості купюр
+		кожного із номіналів від 5 до 200 гривень. Реалізувати методи знаходження максимальної та мінімальної сум, які
+		може видати банкомат, та метод зняття деякої суми.
+	</h3>
+	<script>
+		class TBankomat {
+			#valBanknote = [5, 10, 20, 50, 100, 200]
+			get ValBanknote() {
+				return this.#valBanknote
+			}
+			
+			#numbBanknote
+			get NumbBanknote() {
+				return this.#numbBanknote
+			}
+			set NumbBanknote(arr) {
+				if (arr.length !== 6) throw new Error('Не всі купюри наведені.')
+				this.#numbBanknote = arr
+			}
+
+			constructor(numbBanknote) {
+				this.NumbBanknote = numbBanknote
+			}
+
+			get MinBanknote() {
+				let indexMinBanknote = this.NumbBanknote.findIndex((banknote, index) => {
+					return banknote > 0
+				})
+				if (indexMinBanknote === -1) throw new Error('Банкомат порожній.')
+				return this.ValBanknote[indexMinBanknote]
+			}
+			get MaxPossibleSum() {
+				let maxPossibleSum = this.NumbBanknote.reduce((prevSum, numb, index) =>
+					prevSum + numb * this.ValBanknote[index],
+					0
+				)
+				if (!maxPossibleSum) throw new Error('Банкомат порожній.')
+				return maxPossibleSum
+			}
+
+			withdrawMoney(val) {
+				let deductibleAmount = val
+				if (this.MaxPossibleSum < val) throw new Error(`Недостатньо коштів.`)
+				let minBanknote = this.MinBanknote
+				if (val % minBanknote !== 0) throw new Error(`Введіть суму, кратну ${minBanknote}.`)
+				for (let i = this.NumbBanknote.length - 1; i >= 0; i--) {
+					while (this.NumbBanknote[i] > 0 && deductibleAmount >= this.ValBanknote[i]) {
+						this.NumbBanknote[i]--
+						deductibleAmount -= this.ValBanknote[i]
+					}
+				}
+			}
+			toString(){
+				let result =''
+				this.ValBanknote.forEach((element, index) => {
+					result += `${element} грн: ${this.NumbBanknote[index]} шт., `
+				})
+				return `<p>Доступні такі купюри: ${result}.</p>`
+			}
+		}
+		numbBanknoteInBankomat = [3, 2, 2, 2, 2, 2]
+		let withdrawalAmount = 535
+
+		try {
+        	let bankomat = new TBankomat(numbBanknoteInBankomat)
+			document.write(`<p>У банкоматі ${bankomat.MaxPossibleSum} грн. Мінімальна сума для зняття - ${bankomat.MinBanknote} грн.</p>`)
+			document.write(bankomat)
+			bankomat.withdrawMoney(withdrawalAmount)
+			document.write(`<p>Зняли ${withdrawalAmount} грн. Залишок - ${bankomat.MaxPossibleSum} грн.</p>`)
+			document.write(bankomat)
+      } catch (error) {
+        document.write(`<p>Відмова! ${error.message}</p>`)
+      }
+	</script>
+</body>
+
+</html>

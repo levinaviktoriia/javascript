@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 3</title>
+	<style>
+		table,
+		td {
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Задача 3</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити об’єкт “Фірма” (використати члени-класи)
+	</h3>
+	<table>
+		<tr>
+			<td rowspan="4">Поля</td>
+			<td>назва фірми;</td>
+		</tr>
+		<tr>
+			<td>дата заснування (рік, місяць);</td>
+		</tr>
+		<tr>
+			<td>послуги (назва послуги, вартість, термін виконання);</td>
+		</tr>
+		<tr>
+			<td>адреси філіалів (країна, місто, вулиця, номер будинку);</td>
+		</tr>
+		<tr>
+			<td rowspan="3">Методи</td>
+			<td>визначення кількості років існування фірми;</td>
+		</tr>
+		<tr>
+			<td>виведення всіх філіалів фірми у вказаному місті;</td>
+		</tr>
+		<tr>
+			<td>виведення на екран послуг, що можуть бути виконані за вказану суму грошей та вказаний термін часу;</td>
+		</tr>
+	</table>
+	<script>
+		class Company {
+			#companyName
+			get CompanyName() {
+				return this.#companyName
+			}
+			set CompanyName(newName) {
+				if (newName.length === 0) throw new Error('Назва фірми не може бути порожньою.')
+				this.#companyName = newName
+			}
+			#dateOfEstablishment
+			get DateOfEstablishment() {
+				return this.#dateOfEstablishment
+			}
+			set DateOfEstablishment(val) {
+				if (val.length === 0) throw new Error('Дата заснування не може бути порожньою.')
+				this.#dateOfEstablishment = val
+			}
+			#services
+			get Services() {
+				return this.#services
+			}
+			set Services(val) {
+				if (val.length === 0) throw new Error('Послуги не заповнені.')
+				this.#services = val
+			}
+			#addresses
+			get Addresses() {
+				return this.#addresses
+			}
+			set Addresses(val) {
+				if (val.length === 0) throw new Error('Адреса не заповнена.')
+				this.#addresses = val
+			}
+
+			constructor(companyName, dateOfEstablishment, services, addresses, currentYear = 2024) {
+				this.CompanyName = companyName
+				this.DateOfEstablishment = dateOfEstablishment
+				this.Services = services
+				this.Addresses = addresses
+				this.currentYear = currentYear
+			}
+			toString() {
+				return `	<h3>Назва фірми: ${this.CompanyName}</h3> 
+							<h4>Дата заснування: ${this.DateOfEstablishment}</h4>
+							<h4>Послуги:</h4> ${this.Services}
+							<h4>Адреси філіалів:</h4> ${this.Addresses}
+			`}
+
+			// визначення кількості років існування фірми;
+			get CompanyAge() {
+				return this.currentYear - this.DateOfEstablishment.Year
+			}
+
+			// виведення всіх філіалів фірми у вказаному місті;
+			getBranchesInSpecifiedCity(val) {
+				val = val.toLowerCase()
+				return this.Addresses.filter(el => el.City.toLowerCase() === val);
+			}
+
+			// виведення на екран послуг, що можуть бути виконані за вказану суму грошей та вказаний термін часу;
+			getAppropriateServices(money, time) {
+				time = parseFloat(time)
+				return this.Services.filter(el => (el.Cost <=money && parseFloat(el.Deadline) <= time))
+			}
+		}
+
+		class DateOfEstablishment {
+			#year
+			get Year() {
+				return this.#year
+			}
+			set Year(newYear) {
+				if (newYear <= 0) throw new Error('Введено некоректний рік.')
+				else if (!newYear) throw new Error('Поле "Рік" не заповнено.')
+				this.#year = newYear
+			}
+
+			#month
+			get Month() {
+				return this.#month
+			}
+			set Month(newMonth) {
+				if (newMonth <= 0 || newMonth > 12) throw new Error('Введено некоректний місяць.')
+				else if (!newMonth) throw new Error('Поле "Місяць" не заповнено.')
+				this.#month = newMonth
+			}
+
+			constructor(year, month) {
+				this.Year = year
+				this.Month = month
+			}
+
+			toString() {
+				return `${this.Month}.${this.Year}`
+			}
+		}
+		class Services {
+			#serviceName
+			get ServiceName() {
+				return this.#serviceName
+			}
+			set ServiceName(newServiceName) {
+				if (newServiceName.length === 0) throw new Error('Назва послуги не може бути порожньою.')
+				this.#serviceName = newServiceName
+			}
+
+			#cost
+			get Cost() {
+				return this.#cost
+			}
+			set Cost(newCost) {
+				if (newCost < 0) throw new Error('Вартість послуги не може бути від"ємною.')
+				else if (!newCost) throw new Error('Вартість послуги не заповнено.')
+				this.#cost = newCost
+			}
+
+			#deadline
+			get Deadline() {
+				return this.#deadline
+			}
+			set Deadline(newDeadline) {
+				if (newDeadline.length === 0) throw new Error('Термін виконання не заповнено.')
+				this.#deadline = newDeadline
+			}
+
+			constructor(serviceName, cost, deadline) {
+				this.ServiceName = serviceName
+				this.Cost = cost
+				this.Deadline = deadline
+			}
+
+			toString() {
+				return `<p>Послуга: ${this.ServiceName};</p> 
+				<p>Вартість послуги: ${this.Cost} грн;</p> 
+				<p>Термін виконання: ${this.Deadline}.</p>`
+			}
+		}
+		class Address {
+			#country
+			get Country() {
+				return this.#country
+			}
+			set Country(newCountry) {
+				if (newCountry.length === 0) throw new Error('Поле "Країна" не може бути порожнім.')
+				this.#country = newCountry
+			}
+
+			#city
+			get City() {
+				return this.#city
+			}
+			set City(newCity) {
+				if (newCity.length === 0) throw new Error('Поле "Місто" не може бути порожнім.')
+				this.#city = newCity
+			}
+
+			#street
+			get Street() {
+				return this.#street
+			}
+			set Street(newStreet) {
+				if (newStreet.length === 0) throw new Error('Поле "Вулиця" не може бути порожнім.')
+				this.#street = newStreet
+			}
+
+			#buildingNumber
+			get BuildingNumber() {
+				return this.#buildingNumber
+			}
+			set BuildingNumber(newBuildingNumber) {
+				if (newBuildingNumber.length === 0) throw new Error('Поле "Номер будинку" не може бути порожнім.')
+				this.#buildingNumber = newBuildingNumber
+			}
+
+			constructor(country, city, street, buildingNumber) {
+				this.Country = country
+				this.City = city
+				this.Street = street
+				this.BuildingNumber = buildingNumber
+			}
+
+			toString() {
+				return `${this.Country}, місто ${this.City}, вул. ${this.Street}, буд. ${this.BuildingNumber}<br>`
+			}
+		}
+
+		let dateOfEstablishmentAutoRepair = new DateOfEstablishment(2003, 6)
+		let servicesAutoRepair = [
+			new Services('Комп"ютерна діагностика', 900, '1 година'),
+			new Services('Заміна оливи з промиванням двигуна', 799, '1 година'),
+			new Services('Перевірка розвал-сходження', 990, '0.5 години'),
+			new Services('Перевірка лакофарбового покриття', 399, '0.5 години'),
+			new Services('Діагностика перед купівлею', 3190, '3 години'),
+			new Services('Ремонт МКПП', 8200, '10 годин'),
+		]
+		let addressesAutoRepair = [
+			new Address('Україна', 'Київ', 'Бережанська', '15'),
+			new Address('Україна', 'Київ', 'Травнева', '3'),
+			new Address('Україна', 'Чернівці', 'Нагірна', '11'),
+			new Address('Україна', 'Дніпро', 'Передова', '97'),
+			new Address('Україна', 'Дніпро', ' Богдана Хмельницького', '156А'),
+			new Address('Україна', 'Дніпро', 'Слобожанский', '29А'),
+			new Address('Україна', 'Львів', 'Зелена', '115А'),
+			new Address('Україна', 'Львів', 'Окружна', '9'),
+		]
+
+		let autoRepair = new Company('AutoRepair', dateOfEstablishmentAutoRepair, servicesAutoRepair, addressesAutoRepair)
+		console.log(autoRepair);
+
+		let autoRepairAge = autoRepair.CompanyAge
+		document.write(`<h4>Кількість років існування фірми: ${autoRepairAge}.</h4>`)
+
+		let specifiedCity = 'Київ'
+		let branchesInSpecifiedCity = autoRepair.getBranchesInSpecifiedCity(specifiedCity)
+		if (!branchesInSpecifiedCity.length) throw new Error(`У місті ${specifiedCity} немає філій.`)
+		else document.write(`<h4>Філії розташовані у місті ${specifiedCity}:</h4> ${branchesInSpecifiedCity}`)
+
+		let userMoney = 900
+		let userTime = '1 година'
+		let appropriateServices = autoRepair.getAppropriateServices(userMoney, userTime)
+		if(!appropriateServices.length) throw new Error('Відповідних послуг немає.')
+		else document.write(`<h4>Кількість грошей: ${userMoney} грн, час: ${userTime}. На ваш запит надаються такі послуги:</h4> ${appropriateServices}`)
+	</script>
+</body>
+
+</html>

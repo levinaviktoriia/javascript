@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 1</title>
+</head>
+
+<body>
+	<h1>Задача 1</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити клас TDate для роботи із датами у форматі “день.місяць.рік”. Дата представляється структурою із трьома
+		полями. Реалізувати методи збільшення/зменшення дати на певну кількість днів, місяців чи років. Введення та
+		виведення дати реалізувати за допомогою методу toString.
+	</h3>
+	<script>
+		class TDate {
+			#day
+			get Day() {
+				return this.#day
+			}
+			set Day(newDay) {
+				let dayInMonth = this.getDayInMonth()
+				if (newDay <= 0 || newDay > dayInMonth) throw new Error('Введено некоректний день.')
+				this.#day = newDay
+			}
+
+			#month
+			get Month() {
+				return this.#month
+			}
+			set Month(newMonth) {
+				if (newMonth <= 0 || newMonth > 12) throw new Error('Введено некоректний місяць.')
+				this.#month = newMonth
+			}
+
+			#year
+			get Year() {
+				return this.#year
+			}
+			set Year(newYear) {
+				if (newYear <= 0) throw new Error('Введено некоректний рік.')
+				this.#year = newYear
+			}
+
+			constructor(day, month, year) {
+				this.Month = month
+				this.Year = year
+				this.Day = day
+			}
+			toString() {
+				return `${this.Day}.${this.Month}.${this.Year}`
+			}
+			isLeapYear() {
+				return (this.Year % 4 === 0 && this.Year % 100 !== 0) || this.Year % 400 === 0
+			}
+			getDayInMonth() {
+				switch (this.Month) {
+					case 2:
+						if (this.isLeapYear()) return 29
+						return 28
+					case 4:
+					case 6:
+					case 9:
+					case 11: return 30
+					default: return 31
+				}
+			}
+
+
+			increaseYear(val) {
+				if (val <= 0) throw new Error('Введено некоректне значення років.')
+				this.Year += val
+			}
+			decreaseYear(val) {
+				if (this.Year <= val || val <= 0) throw new Error('Введено некоректне значення років.')
+				this.Year -= val
+			}
+
+			increaseMonth(val) {
+				if (val <= 0) throw new Error('Введено некоректне значення місяців.')
+				let monthNumb = this.Month + val
+				while (monthNumb > 12) {
+					monthNumb -= 12
+					this.Year++
+				}
+				this.Month = monthNumb
+			}
+			decreaseMonth(val) {
+				if (val <= 0) throw new Error('Введено некоректне значення місяців.')
+				let monthNumb = this.Month - val
+				while (monthNumb < 1) {
+					this.Year--
+					monthNumb += 12
+				}
+				this.Month = monthNumb
+			}
+
+			increaseDay(val) {
+				if (val <= 0) throw new Error('Введено некоректне значення днів.')
+				let dayNumb = this.Day
+				let dayInMonth = this.getDayInMonth()
+				dayNumb += val
+				while (dayNumb > dayInMonth) {
+					dayNumb -= dayInMonth
+					this.increaseMonth(1)
+				}
+				this.Day = dayNumb
+			}
+			decreaseDay(val) {
+				if (val <= 0) throw new Error('Введено некоректне значення днів.')
+				let dayNumb = this.Day
+				dayNumb -= val
+				while (dayNumb < 1) {
+					this.decreaseMonth(1)
+					let dayInMonth = this.getDayInMonth()
+					dayNumb += dayInMonth
+				}
+				this.Day = dayNumb
+			}
+		}
+		
+		let date = new TDate(28, 2, 2024)
+		document.write(`<h4>Початкова дата: ${date};</h4>`)
+
+		date.increaseDay(1)
+		document.write(`<ul><li>Збільшили на один день: ${date}</li>`)
+		date.decreaseDay(60)
+		document.write(`<li>Зменшили на 60 днів: ${date}</li>`)
+
+		date.increaseMonth(12)
+		document.write(`<li>Збільшили на 12 місяців: ${date}</li>`)
+		date.decreaseMonth(23)
+		document.write(`<li>Зменшили на 23 місяці: ${date}</li>`)
+
+		date.increaseYear(5)
+		document.write(`<li>Збільшили на 5 років: ${date}</li>`)
+		date.decreaseYear(13)
+		document.write(`<li>Зменшили на 13 років: ${date}</li></ul>`)
+	</script>
+</body>
+
+</html>
