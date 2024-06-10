@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 5</title>
+</head>
+
+<body>
+	<h1>Задача 5</h1>
+	<h3>
+		<!-- Дано: -->
+		Особиста бібліотека. Картотека домашньої бібліотеки: дані книги (автори (піб, рік народження, короткий опис),
+		назва книги, жанр, видавництво (назва, реєстраційний номер, рік засування)). Реалізувати розділи бібліотеки
+		(спеціальна література, хобі, домашнє господарство і т.д.), походження книги і наявність на даний час.
+		Організувати додавання/вилучення книг та вибір книг за назвою, за ПІБ автора, за видавництвом.
+	</h3>
+	<script>
+		class Author {
+			#fullName
+			get FullName() {
+				return this.#fullName
+			}
+			set FullName(newFullName) {
+				if (newFullName.length === 0) throw new Error('Ім\'я автора не може бути порожнім.')
+				this.#fullName = newFullName
+			}
+
+			constructor(fullName, birthYear, briefDescription) {
+				this.FullName = fullName
+				this.birthYear = birthYear
+				this.briefDescription = briefDescription
+			}
+			toString() {
+				return `
+				Автор - ${this.FullName}, <br>
+				Рік народження: ${this.birthYear} <br>
+				Короткий опис: ${this.briefDescription}<br>`
+			}
+		}
+		class PublishingHouse {
+			#name
+			get Name() {
+				return this.#name
+			}
+			set Name(newName) {
+				if (newName.length === 0) throw new Error('Назва видавництва не може бути порожньою.')
+				this.#name = newName
+			}
+			#registrationNumber
+			get RegistrationNumber() {
+				return this.#registrationNumber
+			}
+			set RegistrationNumber(newRegistrationNumber) {
+				if (newRegistrationNumber.length === 0) throw new Error('Реєстраційний номер не може бути порожнім.')
+				this.#registrationNumber = newRegistrationNumber
+			}
+			constructor(name, registrationNumber, yearOfFounding) {
+				this.Name = name
+				this.RegistrationNumber = registrationNumber
+				this.yearOfFounding = yearOfFounding
+			}
+			toString() {
+				return `
+				Видавництво - ${this.Name}, <br>
+				Реєстраційний номер видавництва: ${this.RegistrationNumber} <br>
+				Рік засування видавництва: ${this.yearOfFounding}<br>`
+			}
+		}
+		class Book {
+			#title
+			get Title() {
+				return this.#title
+			}
+			set Title(newTitle) {
+				if (newTitle.length === 0) throw new Error('Назва книги не може бути порожньою.')
+				this.#title = newTitle
+			}
+			#genre
+			get Genre() {
+				return this.#genre
+			}
+			set Genre(newGenre) {
+				if (newGenre.length === 0) throw new Error('Жанр книги не може бути порожнім.')
+				this.#genre = newGenre.toLowerCase()
+			}
+			#originBook
+			get OriginBook() {
+				return this.#originBook
+			}
+			set OriginBook(val) {
+				val = val.toLowerCase()
+				if (val !== 'куплена' && val !== 'подарована') throw new Error('Поле заповнено неправильно. Вкажіть, книга куплена чи подарована.')
+				this.#originBook = val
+			}
+			#availabilityBook
+			get AvailabilityBook() {
+				return this.#availabilityBook
+			}
+			set AvailabilityBook(val) {
+				if (val < 0) throw new Error('Кількість книг не може бути від\'ємним.')
+				this.#availabilityBook = val
+			}
+
+			constructor(fullName, birthYear, briefDescription, title, genre, name, registrationNumber, yearOfFounding, originBook, availabilityBook) {
+				this.author = new Author(fullName, birthYear, briefDescription)
+				this.Title = title
+				this.Genre = genre
+				this.publishingHouse = new PublishingHouse(name, registrationNumber, yearOfFounding)
+				this.OriginBook = originBook
+				this.AvailabilityBook = availabilityBook
+			}
+			toString() {
+				return `
+				<b>${this.Title}</b>
+				<ul>
+					<li>${this.author}</li>
+					<li>Жанр: ${this.Genre}</li>
+					<li>${this.publishingHouse}</li>
+				</ul>`
+			}
+		}
+		class Library {
+			constructor(bookList) {
+				this.books = [...bookList]
+			}
+
+			addBookToTheLibrary(book) {
+				this.books.push(book)
+			}
+			removeBookFromTheLibrary(titleBook) {
+				let idRemove = false
+				for (let i = 0; i < this.books.length; i++) {
+					if (this.books[i].Title === titleBook) {
+						this.books.splice(i, 1)
+						idRemove = true
+					}
+				}
+				if (!idRemove) throw new Error('Такої книги у бібліотеці немає.')
+			}
+			searchBookByTitle(val) {
+				if (this.books.length === 0) throw new Error('Список книг порожній.')
+				let searchBook = this.books.filter((book, index) => book.Title === val)
+				if (searchBook.length === 0) throw new Error('Такої книги у бібліотеці немає.')
+				return searchBook
+			}
+			searchBookByAuthor(val) {
+				if (this.books.length === 0) throw new Error('Список книг порожній.')
+				let searchBook = this.books.filter((book, index) => book.author.FullName === val)
+				if (searchBook.length === 0) throw new Error('Такої книги у бібліотеці немає.')
+				return searchBook
+			}
+			searchBookByPublication(val) {
+				if (this.books.length === 0) throw new Error('Список книг порожній.')
+				let searchBook = this.books.filter((book, index) => book.publishingHouse.Name === val)
+				if (searchBook.length === 0) throw new Error('Такої книги у бібліотеці немає.')
+				return searchBook
+			}
+
+			toString() {
+				let str = '<ol>'
+				for (const book of this.books) {
+					str += '<li>' + book + '</li>'
+				}
+				str += '</ol>'
+				return str
+			}
+		}
+		class LibrarySection {
+			constructor() {
+				this.genreSections = {}
+				this.originBookSections = {}
+				this.availabilityBookSections = {}
+			}
+			getGenreSections(library) {
+				if (library.books.length === 0) throw new Error('Список книг порожній.')
+				for (let i = 0; i < library.books.length; i++) {
+					let book = library.books[i]
+					if (!(book.Genre in this.genreSections)) {
+						this.genreSections[book.Genre] = []
+					}
+					this.genreSections[book.Genre].push(book)
+				}
+				return this.genreSections
+			}
+			getOriginBookSections(library) {
+				if (library.books.length === 0) throw new Error('Список книг порожній.')
+				this.originBookSections = {
+					bought: [],
+					gift: []
+				}
+				for (let i = 0; i < library.books.length; i++) {
+					let book = library.books[i]
+					if (book.OriginBook === 'куплена') this.originBookSections.bought.push(book);
+					else this.originBookSections.gift.push(book)
+				}
+				return this.originBookSections
+			}
+			getAvailabilityBookSections(library) {
+				if (library.books.length === 0) throw new Error('Список книг порожній.')
+				this.availabilityBookSections = {
+					available: [],
+					notAvailable: []
+				}
+				for (let i = 0; i < library.books.length; i++) {
+					let book = library.books[i]
+					if (book.AvailabilityBook > 0) this.availabilityBookSections.available.push(book)
+					else this.availabilityBookSections.notAvailable.push(book)
+				}
+				return this.availabilityBookSections
+			}
+			toString() {
+				let str = ''
+				if(Object.keys(this.genreSections).length !== 0){
+					str+= '<h3>Сортування за жанрами:</h3>'
+					for (const genre in this.genreSections) {
+						str += `<h4>${genre}:</h4><ul>`
+						for (const book of this.genreSections[genre]) {
+							str += `<li>${book}</li>`
+						}
+						str += '</ul>'
+					}
+				}
+				if(Object.keys(this.originBookSections).length !== 0){
+					str+= '<h3>Сортування за походженням книги:</h3>'
+					for (const originBook in this.originBookSections) {
+						str += `<h4>${originBook}:</h4><ul>`
+						for (const book of this.originBookSections[originBook]) {
+							str += `<li>${book}</li>`
+						}
+						str += '</ul>'
+					}
+				}
+				if(Object.keys(this.availabilityBookSections).length !== 0){
+					str+= '<h3>Сортування за наявністю книг:</h3>'
+					for (const availabilityBook in this.availabilityBookSections) {
+						str += `<h4>${availabilityBook}:</h4><ul>`
+						for (const book of this.availabilityBookSections[availabilityBook]) {
+							str += `<li>${book}</li>`
+						}
+						str += '</ul>'
+					}
+				}
+				return str
+			}
+		}
+
+
+		let bookList = [
+			new Book('Джоан Роулінг', 1965, 'Британська письменниця, філантропка, сценаристка, кінопродюсерка. Найпопулярніша англійська дитяча письменниця початку третього тисячоліття, авторка серії романів про Гаррі Поттера, що отримала світове визнання, виграли низку нагород і вийшли накладом понад 500 мільйонів примірників.', 'Гаррі Поттер і таємна кімната', 'fantasy', 'А-ба-ба-га-ла-ма-га', '8964263612837', 1992, 'подарована', 1),
+			new Book('Фрэнсис Скотт Фицджеральд', 1896, 'Американський письменник, автор багатьох романів та оповідань про покоління «епохи джазу», яскравий представник так званого «втраченого покоління».', 'Великий Гетсбі', 'novel', 'Фоліо', '9836296328', 1991, 'подарована', 1),
+			new Book('Джоан Роулінг', 1965, 'Британська письменниця, філантропка, сценаристка, кінопродюсерка. Найпопулярніша англійська дитяча письменниця початку третього тисячоліття, авторка серії романів про Гаррі Поттера, що отримала світове визнання, виграли низку нагород і вийшли накладом понад 500 мільйонів примірників.', 'Гаррі Поттер і філософський камінь', 'fantasy', 'А-ба-ба-га-ла-ма-га', '8964263612837', 1992, 'куплена', 1),
+			new Book('Ги де Мопассан', 1850, 'Французький письменник, якого вважають натуралістом і декадентом, відомий переважно завдяки своїм новелам. ', 'Любий друг', 'Novel', 'Фоліо', '9836296328', 1991, 'куплена', 0),
+			new Book('Антуан де Сент-Экзюпери', 1900, 'Французький письменник і авіатор, граф. Автор твору «Маленький принц».', 'Маленький принц', 'Children\'s literature', 'Кальварія', '982734627846', 2000, 'подарована', 0),
+		]
+		let myLibrary = new Library(bookList)
+
+		let newBook = new Book('Френк Герберт', 1920, 'Американський письменник-фантаст, найбільше відомий як автор «Дюни» та її продовжень. Хоча він став відомий як автор наукової фантастики, він був також журналістом, фотографом, новелістом, книжковим рецензентом, екологічним консультантом і лектором.', 'Дюна', 'fantasy', 'Gollancz', '9781399620093', 1927, 'куплена', 1)
+		myLibrary.addBookToTheLibrary(newBook)
+
+		myLibrary.removeBookFromTheLibrary('Дюна')
+		document.write(myLibrary)
+		console.log(myLibrary);
+
+		let searchBookByTitle = myLibrary.searchBookByTitle('Великий Гетсбі')
+		document.write(`<h3>Книги за назвою "Великий Гетсбі":</h3> ${searchBookByTitle}`)
+		let searchBookByAuthor = myLibrary.searchBookByAuthor('Джоан Роулінг')
+		document.write(`<h3>Книги автора Джоан Роулінг:</h3> ${searchBookByAuthor}`)
+		let searchBookByPublication = myLibrary.searchBookByPublication('Фоліо')
+		document.write(`<h3>Книги видавництва "Фоліо":</h3> ${searchBookByPublication}`)
+
+		let librarySection = new LibrarySection()
+		let genreSections = librarySection.getGenreSections(myLibrary)
+		console.log(genreSections);
+		let originBookSections = librarySection.getOriginBookSections(myLibrary)
+		console.log(originBookSections);
+		let availabilityBookSections = librarySection.getAvailabilityBookSections(myLibrary)
+		console.log(availabilityBookSections)
+		document.write(librarySection)
+	</script>
+
+</body>
+
+</html>

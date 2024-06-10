@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 2</title>
+</head>
+
+<body>
+	<h1>Задача 2</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити службове авто (водій, марка, номер). Створити клас таким чином, щоб можна було створити тільки один екземпляр цього класу.
+	</h3>
+	<script>
+		class CompanyAuto {
+			static companyAutoRef
+			#driver
+			get Driver() {
+				return this.#driver
+			}
+			set Driver(newDriver) {
+				if (newDriver.length === 0) throw new Error('Ім\'я водія не може бути порожнім.')
+				return this.#driver = newDriver
+			}
+			#carBrand
+			get CarBrand() {
+				return this.#carBrand
+			}
+			set CarBrand(newCarBrand) {
+				if (newCarBrand.length === 0) throw new Error('Марка авто не може бути порожньою.')
+				return this.#carBrand = newCarBrand
+			}
+			#carNumb
+			get CarNumb() {
+				return this.#carNumb
+			}
+			set CarNumb(newCarNumb) {
+				if (newCarNumb.length === 0) throw new Error('Номер авто не може бути порожнім.')
+				return this.#carNumb = newCarNumb
+			}
+			constructor(driver, carBrand, carNumb) {
+				if (CompanyAuto.companyAutoRef) return CompanyAuto.companyAutoRef
+				this.Driver = driver
+				this.CarBrand = carBrand
+				this.CarNumb = carNumb
+
+				CompanyAuto.companyAutoRef = this
+			}
+			toString() {
+				return `
+					Ім\'я водія: ${this.Driver}; <br>
+					Марка авто: ${this.CarBrand}; <br>
+					Номер авто: ${this.CarNumb}. <br>
+				`
+			}
+		}
+
+		let companyAuto1 = new CompanyAuto('Ivan Marko', 'Nissan Leaf', 'AA0000AA')
+		document.write(`<h5>Авто №1:</h5> ${companyAuto1}`)
+		let companyAuto2 = new CompanyAuto('Anna Nink', 'Renault Logan', 'ВВ7777ВВ' )
+		document.write(`<h5>Авто №2:</h5> ${companyAuto2}`)
+	</script>
+</body>
+
+</html>

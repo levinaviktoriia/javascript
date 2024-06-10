@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 6</title>
+</head>
+
+<body>
+	<h1>Задача 6</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано два класи MultChecker (клас для перевірки таблиці множення - рандомно генеруються числа, які треба
+		перемножати), AddChecker (клас для перевірки додавання - рандомно генеруються числа у заданому діапазоні, які
+		треба додавати). Обидва класи надсилають результати тестування об'єкту класу History, який зберігає історію
+		тестування у масиві у вигляді об'єктів
+	</h3>
+	<h4>Приклад:</h4>
+	<pre><code>
+testsList= [
+	{firstNum:1, secondNum:5,operation:’*’, userAnswer:7, correctAnswer:5},
+	{firstNum:3, secondNum:4,operation:’+’, userAnswer:7, correctAnswer:7},
+]
+	</code></pre>
+	<p>Можна створити окремий клас TestData, який описує один такий тест і у якому будуть ці поля.
+
+		Розробити клас TestManager, який використовуючи ці класи за допомогою таймера періодично генерує якісь N задач
+		(рандомно вибираємо, що опитувати: додавання чи множення) і проводить опитування.
+
+		Результати тестування додаються в об’єкт History. Зробити так, щоб об'єкт такого класу можна було створити тільки
+		один. Коли зроблено ці N задач вивести усю історію на екран.
+	</p>
+	<script>
+		class Random {
+			static getRandomNumb(minNumb, maxNumb) {
+				return minNumb + Math.floor(Math.random() * (maxNumb - minNumb + 1))
+			}
+		}
+		class MultChecker {
+			#userAnswer
+			get UserAnswer() {
+				return this.#userAnswer
+			}
+			set UserAnswer(val) {
+				if (isNaN(val)) throw new Error('Введіть числовий результат.')
+				this.#userAnswer = val
+			}
+			constructor() {
+				this.firstNum = Random.getRandomNumb(1, 10)
+				this.secondNum = Random.getRandomNumb(1, 10)
+				this.operation = '*'
+				this.correctAnswer = this.calcCorrectAnswer()
+				this.generateQuestion()
+			}
+			calcCorrectAnswer() {
+				return this.firstNum * this.secondNum
+			}
+			generateQuestion() {
+				this.UserAnswer = parseInt(prompt(`Скільки буде ${this.firstNum}*${this.secondNum}`))
+				this.correctAnswer === this.UserAnswer ? alert('Вірно!') : alert('Не вірно!')
+			}
+			toString(){
+				return `${this.firstNum}*${this.secondNum} = ${this.correctAnswer} (Ваша відповідь: ${this.UserAnswer})`
+			}
+		}
+		class AddChecker {
+			#userAnswer
+			get UserAnswer() {
+				return this.#userAnswer
+			}
+			set UserAnswer(val) {
+				if (isNaN(val)) throw new Error('Введіть числовий результат.')
+				this.#userAnswer = val
+			}
+			constructor(minNumb, maxNumb) {
+				this.firstNum = Random.getRandomNumb(minNumb, maxNumb)
+				this.secondNum = Random.getRandomNumb(minNumb, maxNumb)
+				this.operation = '+'
+				this.correctAnswer = this.calcCorrectAnswer()
+				this.generateQuestion()
+			}
+			calcCorrectAnswer() {
+				return this.firstNum + this.secondNum
+			}
+			generateQuestion() {
+				this.UserAnswer  = parseInt(prompt(`Скільки буде ${this.firstNum}+${this.secondNum}`))
+				this.correctAnswer === this.UserAnswer ? alert('Вірно!') : alert('Не вірно!')
+			}
+			toString(){
+				return `${this.firstNum}+${this.secondNum} = ${this.correctAnswer} (Ваша відповідь: ${this.UserAnswer})`
+			}
+		}
+
+		class History {
+			constructor() {
+				this.testList = []
+			}
+			addToTestList(testResult) {
+				this.testList.push(testResult)
+			}
+			getHistory() {
+				return this.testList
+			}
+			toString(){
+				let str = ''
+				for (let i = 0; i < this.testList.length; i++) {
+					str+= `Приклад №${i+1}: ${this.testList[i]}<br>`
+				}
+				return str
+			}
+		}
+
+
+		class TestManager {
+			static testRef
+			constructor(numbTests) {
+				if (TestManager.testRef) return TestManager.testRef
+				this.history = new History()
+				this.startTest(numbTests)
+
+				TestManager.testRef = this
+			}
+			startTest(numbTests) {
+				let timer = setInterval(() => {
+					let typeTest = Random.getRandomNumb(1, 2)
+					let testResult
+					if (numbTests>0) {
+						if (typeTest === 1) {
+							testResult = new MultChecker()
+						}
+						else {
+							testResult = new AddChecker(0, 50)
+						}
+						this.history.addToTestList(testResult)
+						numbTests--
+					}else{
+						clearInterval(timer)
+                	this.displayHistory()
+					}
+				}, 2000)
+			}
+			displayHistory() {
+        		document.write(this.history)
+    		}
+		}
+		let numbExamples = parseInt(prompt('Скільки прикладів хочете розв\'язати?'))
+		let testStart = new TestManager(numbExamples)
+
+	</script>
+</body>
+
+</html>

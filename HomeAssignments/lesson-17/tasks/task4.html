@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 4</title>
+</head>
+
+<body>
+	<h1>Задача 4</h1>
+	<h3>
+		<!-- Дано: -->
+		Склад. База товарів, які зберігаються на складі: назва товару, одиниця виміру, кількість, фірма виробник (назва,
+		реєстраційний номер). Організувати реєстрацію/відвантаження товарів, фільтрація за назвою товару, фільтрація за
+		назвою фірми.
+	</h3>
+	<script>
+		class Manufacturer{
+			#nameManufacturer
+			get NameManufacturer() {
+				return this.#nameManufacturer
+			}
+			set NameManufacturer(newNameManufacturer) {
+				if (newNameManufacturer.length === 0) throw new Error('Назва фірми не може бути порожньою.')
+				this.#nameManufacturer = newNameManufacturer
+			}
+			#registrationNumberManufacturer
+			get RegistrationNumberManufacturer() {
+				return this.#registrationNumberManufacturer
+			}
+			set RegistrationNumberManufacturer(newRegistrationNumber) {
+				if (newRegistrationNumber.length === 0) throw new Error('Реєстраційний номер фірми виробника не може бути порожнім.')
+				this.#registrationNumberManufacturer = newRegistrationNumber
+			}
+			constructor(nameManufacturer, registrationNumberManufacturer){
+				this.NameManufacturer = nameManufacturer
+				this.RegistrationNumberManufacturer = registrationNumberManufacturer
+			}
+			toString(){
+				return `
+					Назва фірми виробника: ${this.NameManufacturer};<br>
+					Реєстраційний номер фірми виробника: ${this.RegistrationNumberManufacturer}. <br>
+				`
+			}
+		}
+		class Product {
+			#name
+			get Name() {
+				return this.#name
+			}
+			set Name(newName) {
+				if (newName.length === 0) throw new Error('Назва товару не може бути порожньою.')
+				this.#name = newName
+			}
+			#unit
+			get Unit() {
+				return this.#unit
+			}
+			set Unit(newUnit) {
+				if (newUnit.length === 0) throw new Error('Одиниця виміру не може бути порожньою.')
+				this.#unit = newUnit
+			}
+			#quantity
+			get Quantity() {
+				return this.#quantity
+			}
+			set Quantity(newQuantity) {
+				if (newQuantity < 0) throw new Error('Кількість товару не може бути від\'ємною.')
+				this.#quantity = newQuantity
+			}
+			
+			constructor(name, unit, quantity, nameManufacturer, registrationNumberManufacturer){
+				this.Name = name
+				this.Unit = unit
+				this.Quantity = quantity
+				this.Manufacturer = new Manufacturer(nameManufacturer, registrationNumberManufacturer)
+			}
+
+			toString() {
+				return `
+				<h5>${this.Name}</h5>
+				Одиниця виміру: ${this.Unit};<br>
+				Кількість: ${this.Quantity};<br>
+				${this.Manufacturer}
+				`
+			}
+		}
+		class Warehouse {
+			constructor() {
+				this.productList = []
+			}
+
+			// метод реєстрації товарів
+			productRegistration(newProduct) {
+				this.productList.push(newProduct)
+			}
+
+			// метод відвантаження товарів
+			shipmentOfProduct(nameProductShipment, quantityProductShipment) {
+				nameProductShipment = nameProductShipment.toLowerCase()
+				let productAvailability = false
+				this.productList.forEach((product, index) => {
+					if (product.Name.toLowerCase() === nameProductShipment) {
+						productAvailability = true
+						if (product.Quantity >= quantityProductShipment) {
+							product.Quantity -= quantityProductShipment
+							if (product.Quantity === 0) this.productList.splice(index, 1);
+						} else throw new Error('Наявної кількості товару недостатньо для відвантаження.')
+					}
+				});
+				if (!productAvailability) throw new Error('Товару немає в наявності.')
+			}
+
+			// фільтрація за назвою товару
+			filterByProductName(searchProduct) {
+				searchProduct = searchProduct.toLowerCase()
+				let arr = this.productList.filter((product) => 
+					product.Name.toLowerCase() === searchProduct ? product : null
+				)
+				if(arr.length ===0)throw new Error('Не знайдено.')
+				return arr
+			}
+
+			// фільтрація за назвою фірми
+			filterByNameManufacturer(searchNameManufacturer) {
+				searchNameManufacturer = searchNameManufacturer.toLowerCase()
+				let arr = this.productList.filter((product) => 
+					product.Manufacturer.NameManufacturer.toLowerCase() === searchNameManufacturer ? product : null
+				)
+				if(arr.length ===0)throw new Error('Не знайдено.')
+				return arr
+			}
+
+			toString() {
+				let str = ``
+				for (const product of this.productList) {
+					str += product
+				}
+				return str
+			}
+		}
+
+		let prodSunflowerOil= new Product('Sunflower oil', 'l', 50, 'Vioil', '2638636404')
+		let prodSalt = new Product('Salt', 'kg', 25, 'Artemsil', '9547001389')
+		let prodSugar = new Product('Sugar', 'kg', 10, 'Astarta-Kyiv', '9469683058')
+		let prodFlour = new Product('Flour', 'kg', 22, 'Khlib Kyieva', '9455627058')
+		let prodCandy = new Product('Candy', 'kg', 50, 'Roshen', '8583524806')
+
+		let warehouse = new Warehouse()
+		warehouse.productRegistration(prodSugar)
+		warehouse.productRegistration(prodSalt)
+		warehouse.productRegistration(prodSunflowerOil)
+		warehouse.productRegistration(prodFlour)
+		warehouse.productRegistration(prodCandy)
+		
+		warehouse.shipmentOfProduct('Sugar', 10)
+
+		document.write(`<h4>База товарів:</h4> ${warehouse}`)
+		console.log(warehouse);
+		
+		document.write(`<h4>Пошук за назвою товару 'Salt':</h4>  ${warehouse.filterByProductName('Salt')}`)
+		document.write(`<h4>Пошук за назвою фірми 'Roshen':</h4> ${warehouse.filterByNameManufacturer('Roshen')}`)
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 1</title>
+</head>
+
+<body>
+	<h1>Задача 1</h1>
+	<h3>
+		<!-- Дано: -->
+		Створити клас, що дозволяє виконувати такі операції над масивами: знаходження кількості додатних, кількості від’ємних, кількість входжень деякого числа (статичні методи).
+	</h3>
+	<script>
+		class Calculations {
+			static calcPositiveNumbers(arr) {
+				return arr.reduce((prevCount, numb) =>
+					(numb > 0 ? prevCount + 1 : prevCount),
+					0)
+			}
+			static calcNegativeNumbers(arr) {
+				return arr.reduce((prevCount, numb) =>
+					(numb < 0 ? prevCount + 1 : prevCount),
+					0)
+			}
+			static calcOfMatchesWithNumber(arr, searchNumb) {
+				let countSearchNumb = arr.reduce((prevCount, numb) =>
+					(numb === searchNumb ? prevCount + 1 : prevCount),
+					0)
+				return !countSearchNumb ? 'Не знайдено' : countSearchNumb
+			}
+		}
+
+		let numbers = [5, 12, 0, -3, 20, -10, 0, 11]
+		document.write(`Кількість позитивних чисел: ${Calculations.calcPositiveNumbers(numbers)}; <br>`)
+		document.write(`Кількість негативних чисел: ${Calculations.calcNegativeNumbers(numbers)};<br>`)
+		document.write(`Кількість 0 у масиві: ${Calculations.calcOfMatchesWithNumber(numbers, 0)};<br>`)
+		document.write(`Кількість 1 у масиві: ${Calculations.calcOfMatchesWithNumber(numbers, 1)}.<br>`)
+	</script>
+</body>
+
+</html>
