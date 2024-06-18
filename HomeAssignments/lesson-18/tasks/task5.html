@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../style.css">
+	<title>Задача 5</title>
+	<style>
+		table {
+			border: 1px solid black;
+		}
+		td{
+			text-align: center;
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		function getRandomNumb(minNumb, maxNumb) {
+			return minNumb + Math.floor(Math.random() * (maxNumb - minNumb + 1))
+		}
+		function createTable(numbRow = 3, numbColumn = 4) {
+			let table = document.createElement('TABLE')
+			for (let i = 0; i < numbRow; i++) {
+				let trEl = document.createElement('TR')
+				for (let n = 0; n < numbColumn; n++) {
+					let tdEl = document.createElement('TD')
+					tdEl.innerText = getRandomNumb(1, 20)
+					trEl.append(tdEl)
+				}
+				table.append(trEl)
+			}
+			return table
+		}
+		window.onload= function(){
+			document.body.append(createTable())
+		}
+	</script>
+	<h1>Задача 5</h1>
+	<h3>
+		<!-- Дано: -->
+		Відобразити таблицю 3*4 з випадковими числами (її треба динамічно створити і вставити на сторінку)
+	</h3>
+</body>
+
+</html>

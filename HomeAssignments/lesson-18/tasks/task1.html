@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../style.css">
+	<title>Задача 1</title>
+</head>
+
+<body>
+	<script>
+		function calcResult(action) {
+			const firstNumb = parseFloat(document.getElementById('firstNumb').value)
+			const secondNumb = parseFloat(document.getElementById('secondNumb').value)
+			let result
+			switch (action) {
+				case 'addition': result = firstNumb + secondNumb
+					break
+				case 'subtraction': result = firstNumb - secondNumb
+					break
+				case 'multiplication': result = firstNumb * secondNumb
+					break
+				case 'division': result = firstNumb / secondNumb
+					break
+			}
+			document.getElementById('result').value = result
+		}
+		window.onload = function () {
+			document.getElementById('addition').onclick = function () {
+				calcResult('addition')
+			}
+			document.getElementById('subtraction').onclick = function () {
+				calcResult('subtraction')
+			}
+			document.getElementById('multiplication').onclick = function () {
+				calcResult('multiplication')
+			}
+			document.getElementById('division').onclick = function () {
+				calcResult('division')
+			}
+		}
+	</script>
+	<div class="title">
+		<h1>Задача 1</h1>
+		<h3>
+			<!-- Дано: -->
+			Розробити калькулятор
+		</h3>
+	</div>
+	<div class="calculator">
+		<label> Перше число
+			<input type="number" id="firstNumb" value="0">
+		</label>
+		<label> Друге число
+			<input type="number" id="secondNumb" value="0">
+		</label>
+		<button id="addition">Додати</button>
+		<button id="subtraction">Відняти</button>
+		<button id="multiplication">Помножити</button>
+		<button id="division">Поділити</button>
+		<hr>
+		<label>Результат
+			<input id="result" type="text" value="0">
+		</label>
+	</div>
+</body>
+
+</html>

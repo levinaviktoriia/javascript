@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 7</title>
+</head>
+
+<body>
+	<script>
+		function calcSumForTravel(){
+			const transportRes =parseFloat(document.getElementById('transport').value)
+			const guideRes = parseFloat(document.querySelector('input[name="guide"]:checked').value)
+			let foodRes= 0
+			document.querySelectorAll('input[id="food"]:checked').forEach(food =>  {
+				foodRes+= parseFloat(food.value)
+			})
+			const sumForTravel = transportRes + foodRes + guideRes
+			const fieldRes = document.getElementById('fieldRes')
+			fieldRes.innerText = sumForTravel
+		}
+		window.onload = function(){
+			const btnCalcSum = document.getElementById('btnCalcSum')
+			btnCalcSum.onclick = calcSumForTravel
+		}
+	</script>
+	<h1>Задача 7</h1>
+	<h3>
+		<!-- Дано: -->
+		Подорож складається з 3 етапів. На кожному етапі користувач може вибрати один з видів транспорту (авто, автобус, літак - випадаючий список), харчування (сніданок, обід, вечеря – checkbоx) та одного з 3-х гідів(використати - radio buttons). Ціни визначте самі. Підрахувати загальну вартість.
+	</h3>
+	<div class="travel" id="travel">
+		<h4 class="travel__title">Виберіть варіанти послуг:</h4>
+		<fieldset>
+			<legend>Транспорт</legend>
+			<select id="transport">
+				<option value="4000">Авто</option>
+				<option value="3000">Автобус</option>
+				<option value="6000">Літак</option>
+			</select>
+		</fieldset>
+		<fieldset>
+			<legend>Харчування</legend>
+			<label>
+				<input type="checkbox" id="food" value="250">
+				Сніданок
+			</label>
+			<label>
+				<input type="checkbox" id="food" value="250">
+				Oбід
+			</label>
+			<label>
+				<input type="checkbox" id="food" value="250">
+				Вечеря
+			</label>
+		</fieldset>
+		<fieldset>
+			<legend>Гід</legend>
+			<label>
+				<input type="radio" name="guide" id="guide" value="800">
+				Олександр Вознюк
+			</label>
+			<label>
+				<input type="radio" name="guide" id="guide" value="500">
+				Валентина Прибиткова
+			</label>
+			<label>
+				<input type="radio" name="guide" id="guide" value="650">
+				Анастасія Зозуля
+			</label>
+		</fieldset>
+		<button class="travel__button" id="btnCalcSum">Розрахувати вартість</button>
+		<h4>Загальна вартість <span id="fieldRes">0</span> грн.</h4>
+	</div>
+</body>
+
+</html>

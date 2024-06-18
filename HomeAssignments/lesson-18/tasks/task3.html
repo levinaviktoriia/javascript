@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 3</title>
+	<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+	<script>
+		function calcAge(){
+			const currentYear = new Date().getFullYear();
+			let yearOfBirthOfUser = parseInt(document.getElementById('yearOfBirth').value)
+			document.getElementById('userAge').value = currentYear - yearOfBirthOfUser
+		}
+		window.onload = function(){
+			document.getElementById('btnCalcAge').onclick = calcAge
+		}
+	</script>
+	<div class="title">
+		<h1>Задача 3</h1>
+		<h3>
+			<!-- Дано: -->
+			Користувач задає рік народження. Визначити кількість років користувача.
+		</h3>
+	</div>
+	<div class="age-calculation">
+		<label>Введіть рік народження
+			<input id="yearOfBirth" type="number" placeholder="1990">
+		</label>
+		<button id="btnCalcAge">Розрахувати вік</button>
+		<hr>
+		<label>
+			Ваш вік
+			<input id="userAge" type="text" placeholder="34">
+		</label>
+		
+	</div>
+
+</body>
+
+</html>

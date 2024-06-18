@@ -1,0 +1,15 @@
+.title{
+	text-align: center;
+}
+.calculator,
+.converter,
+.age-calculation{
+	margin: 0 auto;
+	max-width: 300px;
+	border: 1px solid black;
+	padding: 20px;
+}
+label{
+	display: block;
+	margin-bottom: 5px;
+}

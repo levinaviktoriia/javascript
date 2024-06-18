@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 6</title>
+	<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+	<script>
+		function createTableWithInput() {
+			const amountOfNumbers = parseInt(document.getElementById('amountOfNumbers').value)
+			let table = document.createElement('TABLE')
+			let trEl = document.createElement('TR')
+			for (let n = 0; n < amountOfNumbers; n++) {
+				let tdEl = document.createElement('TD')
+				let input = document.createElement('INPUT')
+				input.setAttribute('type', 'number')
+				input.setAttribute('class', 'scores-block__input')
+				tdEl.append(input)
+				trEl.append(tdEl)
+			}
+			table.append(trEl)
+			return table
+		}
+		function createBtn() {
+			let btnGetAverage = document.createElement('BUTTON')
+			btnGetAverage.setAttribute('id', 'btnGetAverage')
+			btnGetAverage.innerText = 'get sum'
+			return btnGetAverage
+		}
+		function calcAverage() {
+			let inputList = document.getElementsByClassName('scores-block__input')
+			let sum = 0
+			for (const inp of inputList) {
+				sum += parseFloat(inp.value)
+			}
+			let average = sum / inputList.length
+			return average
+		}
+		function showTable() {
+			const scoresBlock = document.querySelector('.scores-block__content')
+			scoresBlock.innerHTML = '';
+			scoresBlock.append(document.createElement('HR'))
+			scoresBlock.append(createTableWithInput())
+			scoresBlock.append(document.createElement('HR'))
+		}
+		window.onload = function () {
+			document.getElementById('btnCreateTable').onclick = function () {
+				showTable()
+				const scoresBlock = document.querySelector('.scores-block__content')
+				let btnGetAverage = document.createElement('BUTTON')
+				btnGetAverage.setAttribute('id', 'btnGetAverage')
+				btnGetAverage.innerText = 'get sum'
+				scoresBlock.append(btnGetAverage)
+				let result = document.createElement('div')
+				btnGetAverage.onclick = function () {
+					let average = calcAverage()
+					result.innerText = 'Sum = ' + average
+				}
+				scoresBlock.append(result)
+			}
+		}
+	</script>
+	<h1>Задача 6</h1>
+	<h3>
+		<!-- Дано: -->
+		Користувач задає кількість оцінок і натискає на кнопку «get table». В результаті формується таблиця з input, куди
+		користувач вводить оцінки. Після цього натискає на кнопку “get sum” і знаходить середнє значення.
+	</h3>
+
+	<div class="scores-block">
+		<div class="scores-block__header">
+			<label>
+				<strong>Price number</strong>
+				<input id="amountOfNumbers" type="number">
+			</label>
+			<button id="btnCreateTable">get table</button>
+		</div>
+		<div class="scores-block__content"></div>
+	</div>
+</body>
+
+</html>

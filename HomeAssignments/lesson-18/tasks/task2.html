@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 2</title>
+	<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+	<script>
+		const exchangeRateUSD = 40.6908
+		const exchangeRateEUR = 43.8850
+
+		function currencyConverter(exchangeRateUSD, exchangeRateEUR){
+			let amountInUAH = parseFloat(document.getElementById('amountInUAH').value)
+			let amountInEUR = amountInUAH / exchangeRateEUR
+			document.getElementById('amountInEUR').value = amountInEUR.toFixed(2)
+			let amountInUSD = amountInUAH / exchangeRateUSD
+			document.getElementById('amountInUSD').value = amountInUSD.toFixed(2)
+		}
+		window.onload =function(){
+			document.getElementById('btnConverter').onclick = function(){
+				currencyConverter(exchangeRateUSD, exchangeRateEUR)
+			}
+		}
+	</script>
+	<div class="title">
+		<h1>Задача 2</h1>
+		<h3>
+			<!-- Дано: -->
+			Зробити конвертер валют (курси валют – константи у скрипті)
+		</h3>
+	</div>
+	<div class="converter">
+		<label>
+			Сума в гривнях
+			<input id="amountInUAH" type="number" value="0">
+		</label>
+		<button id="btnConverter">Конвертувати</button>
+		<hr>
+		<label>
+			Сума в євро
+			<input id="amountInEUR" type="text" value="0">
+		</label>
+		<label>
+			Сума в доларах
+			<input id="amountInUSD" type="text" value="0">
+		</label>
+	</div>
+</body>
+</html>
