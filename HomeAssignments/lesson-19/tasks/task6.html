@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 6</title>
+	<style>
+		.competition {
+			display: grid;
+			gap: 30px;
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.competition__column {
+			display: flex;
+			flex-direction: column;
+
+		}
+
+		.competition__title {}
+
+		.competition__list {
+			list-style: none;
+			border: 1px solid black;
+			padding: 10px;
+			flex-grow: 1;
+		}
+		.competition__item {
+			padding: 3px;
+			border: 1px solid black;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			column-gap: 20px;
+		}
+		.competition__item:not(:last-child) {
+			margin-bottom: 5px;
+		}
+		.competition__btn {
+			width: 60px;
+			height: 40px;
+		}
+		.competition__btn--green {
+			background: url('../img/green-arrow.png') center / contain no-repeat;
+		}
+		.competition__btn--red {
+			background: url('../img/red-arrow.png') center / contain no-repeat;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		class CreateCompetitionBlock {
+			constructor(sportsmen) {
+				if (!sportsmen || sportsmen.length === 0) {
+					throw new Error('Немає спортсменів для створення блоку');
+				}
+				this.block = this.createBlock([...sportsmen])
+			}
+			createBlock(sportsmenList) {
+				let block = document.createElement('DIV')
+				block.className = 'competition'
+				let allSportsmen = this.createColumn('Загальний список', sportsmenList)
+
+				allSportsmen.querySelector('UL').id = 'all-sportsmen'
+
+				block.append(allSportsmen)
+				let selectedSportsmenList = []
+				let selectedSportsmen = this.createColumn('Обрані для змагання', selectedSportsmenList)
+
+				selectedSportsmen.querySelector('UL').id = 'selected-sportsmen'
+
+				block.append(selectedSportsmen)
+				document.body.append(block)
+
+				block.addEventListener('click', this.onclick.bind(this))
+			}
+			createColumn(text, sportsmenList) {
+				let column = document.createElement('DIV')
+				column.className = 'competition__column'
+				let title = document.createElement('H4')
+				title.className = 'competition__title'
+				title.innerText = `${text}`
+				column.append(title)
+				let list = document.createElement('UL')
+				list.className = 'competition__list'
+				for (let i = 0; i < sportsmenList.length; i++) {
+					let item = document.createElement('LI')
+					item.className = 'competition__item'
+					let p = document.createElement('P')
+					p.className = 'competition__text'
+					p.innerText = sportsmenList[i]
+					item.append(p)
+					let btn = document.createElement('BUTTON')
+					btn.className = 'competition__btn competition__btn--green'
+					item.append(btn)
+					list.append(item)
+				}
+				column.append(list)
+				return column
+			}
+			onclick(e) {
+				let clickerEl = e.target
+				if (clickerEl.tagName === 'BUTTON') {
+					let allSportsmen = document.getElementById('all-sportsmen')
+					let selectedSportsmen = document.getElementById('selected-sportsmen')
+					let item = clickerEl.parentElement
+					let newItem = item.cloneNode(true)
+					let newBtn = newItem.querySelector('BUTTON')
+
+					if (clickerEl.closest('#all-sportsmen')) {
+						newBtn.classList.remove('competition__btn--green')
+						newBtn.classList.add('competition__btn--red')
+						newBtn.onclick = this.onclick.bind(this)
+						selectedSportsmen.append(newItem)
+					}
+					if (clickerEl.closest('#selected-sportsmen')) {
+						newBtn.classList.remove('competition__btn--red')
+						newBtn.classList.add('competition__btn--green')
+						newBtn.onclick = this.onclick.bind(this)
+						allSportsmen.append(newItem)
+					}
+					item.remove()
+				}
+			}
+		}
+		window.onload = function () {
+			let sportsmenList = ['John Depp', 'Sara Wik', 'Alan Woo', 'Olga Sich', 'Ivan Hal']
+			let competition = new CreateCompetitionBlock(sportsmenList)
+		}
+	</script>
+	<h1>Задача 6</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано список спортсменів. Потрібно сформувати список тих, які будуть брати участь у змаганні. При цьому є два
+		стовпці. В одному відображені всі спортсмени, в іншому – список тих, хто був вибраний. При натисканні на зелену
+		стрілку спортсмен переміщається у список для змагань. При натисканні на червону стрілку спортсмен переміщається у
+		загальний список.
+	</h3>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 3</title>
+	<style>
+		.list-block {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.list-block>button {
+			align-self: center;
+		}
+
+		.list-block__container {
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+		}
+
+		.list-block__container>div {
+			flex-basis: 100%;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		function paintLists(listContainer) {
+			let lists = listContainer.getElementsByTagName('OL')
+			for (const list of lists) {
+				if (list.children.length % 2 === 0)
+					for (const li of list.children) {
+						li.style.color = 'green'
+					}
+				else
+					for (const li of list.children) {
+						li.style.color = 'red'
+					}
+			}
+		}
+		function getRandomNumb(minNumb, maxNumb) {
+			return minNumb + Math.floor(Math.random() * (maxNumb - minNumb + 1))
+		}
+		function createOrderList(numbLi) {
+			let newList = document.createElement('OL')
+			for (let i = 0; i < numbLi; i++) {
+				let li = document.createElement('LI')
+				li.innerText = getRandomNumb(1, 100)
+				newList.append(li)
+			}
+			return newList
+		}
+		window.onload = function () {
+			let listBlock = document.createElement('DIV')
+			listBlock.className = "list-block"
+			let listContainer = document.createElement('DIV')
+			listContainer.className = "list-block__container"
+			for (let i = 0; i < 5; i++) {
+				let randomNumb = getRandomNumb(1, 10)
+				let newList = createOrderList(randomNumb)
+				listContainer.append(newList)
+			}
+			listBlock.append(listContainer)
+			let btn = document.createElement('BUTTON')
+			btn.innerText = 'Find even list'
+			listBlock.append(btn)
+			document.body.append(listBlock)
+
+			btn.onclick = () => paintLists(listContainer)
+		}
+
+	</script>
+	<h1>Задача 3</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано 5 випадковим чином згенерованих нумерованих списків з рандомними числами (кількість елементів у списку
+		випадкова від 1 до 10, елементи випадкові – від 1 до 100). При натисненні на кнопку нумеровані списки з парною
+		кількістю елементів зафарбувати у зелений колір, інші у червоний.
+	</h3>
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 4</title>
+	<style>
+		table {
+			background-color: thistle;
+			border: 3px solid slategrey;
+			margin-bottom: 20px;
+		}
+		td {
+			min-width: 30px;
+			height: 30px;
+			text-align: center;
+			border: 1px solid slategrey;
+			cursor: pointer;
+		}
+		.some-block{
+			display: flex;
+			gap: 20px;
+			flex-wrap: wrap;
+			justify-content: space-around;
+		}
+		.some-block>div{
+			display: grid;
+			column-gap: 20px;
+			align-items: center;
+			justify-items: center;
+		}
+		.some-block__table{
+			grid-column: span 2;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		function getRandomNumb(minNumb, maxNumb) {
+			return minNumb + Math.floor(Math.random() * (maxNumb - minNumb + 1))
+		}
+		function createTable(numbRow, numbColumn) {
+			let table = document.createElement('TABLE')
+			for (let r = 0; r < numbRow; r++) {
+				let row = document.createElement('TR')
+				for (let c = 0; c < numbColumn; c++) {
+					let column = document.createElement('TD')
+					column.innerText = getRandomNumb(1, 9)
+					row.append(column)
+				}
+				table.append(row)
+			}
+			return table
+		}
+		function paintBorder(e) {
+			let tables = document.getElementsByTagName('TABLE')
+			for (const table of tables) {
+				table.style.border = '3px solid slategrey'
+			}
+			let clickerElem = e.target;
+			if (clickerElem.tagName === 'TD') {
+				clickerElem.closest('TABLE').style.border = '3px solid red'
+			}
+		}
+		function counterClick(e) {
+			let clickerElement = e.target
+			let clickOnTable = clickerElement.closest('TABLE')
+			if (clickerElement.tagName === 'TD') {
+				if (clickOnTable.hasAttribute('data-counter')) {
+					let numbClick = parseInt(clickOnTable.getAttribute('data-counter')) + 1
+					clickOnTable.setAttribute('data-counter', `${numbClick}`)
+				}
+				else {
+					clickOnTable.setAttribute('data-counter', '1')
+					let fieldForCountClick = document.createElement('P')
+					clickOnTable.before(fieldForCountClick)
+				}
+				let fieldForCountClick = clickOnTable.previousElementSibling
+				fieldForCountClick.innerText = `Count click: ${clickOnTable.getAttribute('data-counter')}`
+			}
+		}
+		window.onload = function () {
+			let someBlock = document.createElement('DIV')
+			someBlock.className = "some-block"
+			for (let i = 1; i <= 3; i++) {
+				let someBlockColumn = document.createElement('DIV')
+				let title = document.createElement('H4')
+				title.innerText = `Table №${i}`
+				title.className = 'some-block__title'
+				someBlockColumn.append(title)
+
+				let table = createTable(3, 3)
+				table.className = 'some-block__table'
+				someBlockColumn.append(table)
+				someBlock.append(someBlockColumn)
+			}
+			document.body.append(someBlock)
+			someBlock.addEventListener("click", paintBorder)
+			someBlock.addEventListener("click", counterClick)
+		}
+
+
+
+
+
+	</script>
+	<h1>Задача 4</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано 3 таблиці розмірності 3*3 з випадковими числами. Якщо відбувається клік на якійсь із клітинок, то до
+		відповідної таблиці додається червона рамка (спробуйте додати можливість відображення кількості кліків біля назви
+		таблиці з використанням відповідно доданого для цього атрибута).
+	</h3>
+</body>
+
+</html>

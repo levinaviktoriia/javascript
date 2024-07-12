@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 2</title>
+	<style>
+		label{
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		function fillingInput(e){
+			const enteredElement = e.target
+			if(enteredElement.tagName === 'INPUT'){
+				let enteredNumb = parseInt(enteredElement.value)
+				if(!isNaN(enteredNumb)){
+
+					let currentInput = enteredElement
+					let currentNumb = enteredNumb
+					let currentLabel = currentInput.parentElement
+					while(currentLabel.nextElementSibling !== null){
+						currentLabel = currentLabel.nextElementSibling
+						currentInput = currentLabel.querySelector('input')
+						currentInput.value = ++currentNumb
+					}
+					
+					currentInput = enteredElement
+					currentNumb = enteredNumb
+					currentLabel = currentInput.parentElement;
+					while(currentLabel.previousElementSibling !== null){
+						currentLabel = currentLabel.previousElementSibling;
+						currentInput = currentLabel.querySelector('input')
+						currentInput.value = --currentNumb
+					}
+				}
+			}
+		}
+		window.onload = function(){
+			document.getElementById('input-block').oninput = fillingInput
+		}
+	</script>
+	<h1>Задача 2</h1>
+	<h3>
+		<!-- Дано: -->
+		Дано 5 елементів input. При введенні значення у якийсь із них необхідно автоматично заповнювати інші (усі попередні у спадному порядку(кожен попередній має значення на 1 менше за наступний)), усі наступні на 1 більше (кожен наступне на 1 більше за попереднього)
+	</h3>
+	<div id="input-block">
+		<label class="input-block__label"> Value 1
+			<input class="input-block__input" type="number">
+		</label>
+		<label class="input-block__label"> Value 2
+			<input class="input-block__input" type="number">
+		</label>
+		<label class="input-block__label"> Value 3
+			<input class="input-block__input" type="number">
+		</label>
+		<label class="input-block__label"> Value 4
+			<input class="input-block__input" type="number">
+		</label>
+		<label class="input-block__label"> Value 5
+			<input class="input-block__input" type="number">
+		</label>
+	</div>
+</body>
+</html>

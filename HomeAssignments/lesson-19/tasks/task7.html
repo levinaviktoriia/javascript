@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 7</title>
+	<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		.background {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			z-index: 1000;
+			pointer-events: none;
+		}
+
+		.background__snowflake {
+			position: absolute;
+			top: -45px;
+			z-index: 1001;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		'use strict'
+		class Random {
+			static getNumb(minNumb, maxNumb) {
+				return minNumb + Math.floor(Math.random() * (maxNumb - minNumb + 1))
+			}
+		}
+
+		class Snowflake {
+			static snowflakeUrl = '../img/snowflake.png'
+			constructor() {
+				this.snowflake = this.createSnowflake()
+				this.fallingSnowflake(this.snowflake)
+			}
+			createSnowflake() {
+				const snowflake = document.createElement('IMG')
+				snowflake.className = 'background__snowflake'
+				snowflake.src = Snowflake.snowflakeUrl
+				return snowflake
+			}
+			fallingSnowflake(element) {
+				const windowHeight = document.documentElement.clientHeight
+
+				let positionSnowflakeX = Random.getNumb(0, 100)
+				let sizeSnowflake = Random.getNumb(25, 45)
+
+				element.style.width = `${sizeSnowflake}px`
+				element.style.height = `${sizeSnowflake}px`
+				element.style.left = `${positionSnowflakeX}%`
+
+				let top = -sizeSnowflake
+				return setInterval(() => {
+					top +=1
+					if (top > windowHeight) top = -sizeSnowflake
+					element.style.top = `${top}px`
+				}, Random.getNumb(10, 100))
+			}
+		}
+		class Snow {
+			constructor(numbSnowflakes) {
+				this.createBackground(numbSnowflakes)
+			}
+			createBackground(amountSnowflakes) {
+				let background = document.createElement('DIV')
+				background.className = 'background'
+				let createSnow = setInterval(() => {
+					if (amountSnowflakes !== 0) {
+						background.append(new Snowflake().snowflake)
+						amountSnowflakes--
+					} else clearInterval(createSnow)
+				}, Random.getNumb(1000, 2000))
+				document.body.append(background)
+			}
+		}
+
+		window.onload = function () {
+			let snow = new Snow(20)
+		}
+	</script>
+	<h1>Задача 7</h1>
+	<h3>
+		<!-- Дано: -->
+		Відобразити падаючий сніг. Сніжинка з’являється у верхній частині екрану (top =0) і з випадковою швидкістю
+		рухається вниз (у setInterval викликати метод, у якому додавати крок до top). Як тільки сніжинка досягає нижньої
+		частини екрану (top>maxTop) вона знову повинна з’явитись у верхній частині екрану (top=0).
+	</h3>
+</body>
+
+</html>
