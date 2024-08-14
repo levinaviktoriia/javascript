@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 3</title>
+	<style>
+		.image-container {
+			position: relative;
+			height: 100vh;
+		}
+
+		.image-container__house {
+			aspect-ratio: 1;
+			height: 100%;
+			width: 100%;
+			object-fit: contain;
+			object-position: center;
+			transition: all .2s ease;
+		}
+
+		.image-container__dog {
+			width: 250px;
+			aspect-ratio: 1;
+			transition: all .3s ease;
+		}
+
+		.image-container__bird {
+			width: 200px;
+			aspect-ratio: 1/0.745;
+			transition: all .4s ease;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		class ImageGenerator {
+			constructor(positionX, positionY, imageSrc, interval) {
+				this.positionX = positionX
+				this.positionY = positionY
+				this.imageSrc = imageSrc
+				this.interval = interval
+				this.el = this.render()
+			}
+			updateWithInterval(func) {
+				setInterval(func, this.interval)
+			}
+			render() {
+				const image = document.createElement('DIV')
+				image.style.cssText = `background-image: url('${this.imageSrc}'); background-size: contain; background-repeat: no-repeat; background-position: center; position: absolute; top: ${this.positionY}px; left: ${this.positionY}px;`
+				return image
+			}
+			getRandomNumb(minNumb, maxNumb) {
+				return minNumb + Math.floor(Math.random() * (maxNumb - minNumb + 1))
+			}
+		}
+		class House extends ImageGenerator {
+			constructor(positionX, positionY, imageSrc, interval, minScale = 0.5, maxScale = 1) {
+				super(positionX, positionY, imageSrc, interval)
+				this.minScale = minScale
+				this.maxScale = maxScale
+				this.updateWithInterval(this.changeOfSize.bind(this))
+			}
+			changeOfSize() {
+				const randomScale = this.minScale + Math.random() * this.minScale
+				this.el.style.transform = `scale(${randomScale})`
+			}
+		}
+
+		class Dog extends ImageGenerator {
+			constructor(positionX, positionY, imageSrc, interval) {
+				super(positionX, positionY, imageSrc, interval)
+				this.updateWithInterval(this.changeOfPositionX.bind(this))
+			}
+			changeOfPositionX() {
+				const maxPosLeft = this.el.parentElement.offsetWidth - this.el.offsetWidth
+				const randomPosX = this.getRandomNumb(0, maxPosLeft)
+				this.positionX = randomPosX
+				this.el.style.left = `${this.positionX}px`
+			}
+		}
+
+		class Bird extends ImageGenerator {
+			constructor(positionX, positionY, imageSrc, interval) {
+				super(positionX, positionY, imageSrc, interval)
+				this.updateWithInterval(this.changeOfPosition.bind(this))
+			}
+			changeOfPosition() {
+				const maxPosLeft = this.el.parentElement.offsetWidth - this.el.offsetWidth
+				const maxPosTop = this.el.parentElement.offsetHeight - this.el.offsetHeight
+				const randomPosX = this.getRandomNumb(0, maxPosLeft)
+				const randomPosY = this.getRandomNumb(0, maxPosTop)
+
+				this.positionX = randomPosX
+				this.positionY = randomPosY
+				this.el.style.top = `${this.positionY}px`
+				this.el.style.left = `${this.positionX}px`
+			}
+		}
+
+		window.onload = function () {
+			const imgContainer = document.querySelector('#cnt')
+
+			const house = new House(0, 0, '../img/house.png', 500)
+			house.el.className = 'image-container__house'
+			imgContainer.append(house.el)
+
+			const dog = new Dog(0, 550, '../img/dog.png', 700)
+			dog.el.className = 'image-container__dog'
+			imgContainer.append(dog.el)
+
+			const bird = new Bird(0, 50, '../img/bird.png', 800)
+			bird.el.className = 'image-container__bird'
+			imgContainer.append(bird.el)
+		}
+	</script>
+	<div class="image-container" id="cnt"></div>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 1-2</title>
+	<style>
+		.bank {
+			border: 1px solid black;
+			padding: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		class Client {
+			#clientId
+			get ClientId() {
+				return this.#clientId
+			}
+			#clientFullName
+			get ClientFullName() {
+				return this.#clientFullName
+			}
+			set ClientFullName(val) {
+				if (val.length === 0) throw new Error('Введіть ПІБ.')
+				else if (isFinite(val)) throw new Error('ПІБ не може бути числом.')
+				else this.#clientFullName = val
+			}
+			#balance
+			get Balance() {
+				return this.#balance
+			}
+			set Balance(val) {
+				this.#balance = val
+			}
+			constructor(clientFullName, balance) {
+				this.#clientId = 10000000 + Math.floor(Math.random() * 90000000)
+				this.ClientFullName = clientFullName
+				this.Balance = balance 
+			}
+
+			addingMoney(val) {
+				if (val < 0) throw new Error('Не можна додавати від\'ємну кількість грошей.')
+				this.Balance += val
+			}
+			withdrawalOfMoney(val) {
+				if (val < 0) throw new Error('Не можна зняти від\'ємну кількість грошей.')
+				if (this.Balance < val) throw new Error('Недостатньо коштів.')
+				this.Balance -= val
+			}
+			toString() {
+				return `${this.ClientFullName} (№${this.ClientId}): ${this.Balance} грн.`
+			}
+		}
+		class GoldenClient extends Client {
+			#creditLimit
+			get CreditLimit() {
+				return this.#creditLimit
+			}
+			set CreditLimit(val) {
+				if (val < 0) throw new Error('Кредитний лиміт не може бути від\'ємним.')
+				this.#creditLimit = val
+			}
+			#interestForUsingCreditFunds
+			get InterestForUsingCreditFunds() {
+				return this.#interestForUsingCreditFunds
+			}
+			set InterestForUsingCreditFunds(val) {
+				if (val < 0) throw new Error('Відсоток не може бути від\'ємним.')
+				this.#interestForUsingCreditFunds = val
+			}
+
+			constructor(clientFullName, balance, creditLimit, interestForUsingCreditFunds) {
+				super(clientFullName, balance)
+				this.CreditLimit = creditLimit
+				this.InterestForUsingCreditFunds = interestForUsingCreditFunds
+			}
+
+			withdrawalOfMoney(val) {
+				if (val < 0) throw new Error('Не можна зняти від\'ємну кількість грошей.')
+				if (this.Balance >= val) this.Balance -= val
+				else {
+					const remainingAmount = val - this.Balance;
+					if (remainingAmount > this.CreditLimit) throw new Error('Недостатньо коштів, включаючи кредитний ліміт.');
+					this.Balance -= val
+				}
+			}
+			calcOfPenaltiesForUsingCreditFunds() {
+				if (this.Balance < 0) return this.Balance * this.InterestForUsingCreditFunds / -100
+			}
+			toString() {
+				return `${super.toString()} Кредитний ліміт: ${this.CreditLimit} грн., Відсоток за використання кредитних коштів: ${this.InterestForUsingCreditFunds}%`
+			}
+		}
+		class Bank {
+			#clientList
+			get ClientList() {
+				return this.#clientList
+			}
+			set ClientList(arr) {
+				if (!Array.isArray(arr)) throw new Error('Помилка!')
+				this.#clientList = arr
+			}
+			constructor(clientList, containerSelector) {
+				this.ClientList = clientList
+				this.el = this.render(containerSelector)
+			}
+			get Clients() {
+				return this.ClientList.filter(client => !(client instanceof GoldenClient))
+			}
+			get GoldenClients() {
+				return this.ClientList.filter(client => client instanceof GoldenClient)
+			}
+			calcTotalBalance() {
+				return this.ClientList.reduce((prevSum, client) => (prevSum + client.Balance), 0)
+			}
+			createList(title, clientList) {
+				const containerList = document.createElement('DIV')
+
+				const titleEl = document.createElement('H3')
+				titleEl.innerText = title
+				containerList.append(titleEl)
+
+				const list = document.createElement('UL')
+				for (const client of clientList) {
+					const li = document.createElement('LI')
+					li.innerText = client.toString()
+					list.append(li)
+				}
+				containerList.append(list)
+
+				return containerList
+			}
+
+			render(containerSelector) {
+				const containerEl = document.createElement('DIV')
+
+				const ordinaryClientsBlock = this.createList('Прості клієнти банку:', this.Clients)
+				containerEl.append(ordinaryClientsBlock)
+				const goldenClientsBlock = this.createList('VIP клієнти банку:', this.GoldenClients)
+				containerEl.append(goldenClientsBlock)
+
+				const totalBalance = document.createElement('DIV')
+				totalBalance.innerText = `Сумарна кількість грошей на рахунку: ${this.calcTotalBalance()} грн.`
+				containerEl.append(totalBalance)
+
+				if (!containerSelector) throw new Error('Не задано containerSelector')
+				document.querySelector(containerSelector).append(containerEl)
+				return containerEl
+			}
+		}
+
+		window.onload = function () {
+			try {
+				const clientsList = [
+					new Client('Тетяна Вікторівна Григоренко', 2000),
+					new GoldenClient('Артем Валерійович Левченко', 1000, 10000, 3),
+					new Client('Павло Юрійович Яремчук', 500),
+					new GoldenClient('Катерина Олегівна Мельник', 50305, 20000, 2),
+					new GoldenClient('Катерина Олегівна Мельник', 135244, 10000, 3),
+					new Client('Володимир Андрійович Ковальчук', 12435),
+					new Client('Олена Сергіївна Дорошенко', 6234)
+				]
+				const testBank = new Bank(clientsList, '#bank')
+			} catch (err) {
+				console.error(err.message);
+			}
+		}
+	</script>
+	<h1>Задача 1-2</h1>
+	<h3>
+		<!-- Дано: -->
+		1. Створити клас Client. На основі цього класу створити клас GoldenClient. 2. Створити клас Bank, у якому
+		зберігається масив клієнтів. Виконати такі операції.
+	</h3>
+	<ul>
+		<li>Вивести всіх простих клієнтів;</li>
+		<li>Вивести всіх клієнтів GoldenClient;</li>
+		<li>Знайти сумарну кількість грошей на рахунку;</li>
+	</ul>
+	<div class="bank" id="bank"></div>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Задача 4</title>
+	<style>
+		.correction-of-grade__container{
+			padding: 20px;
+			max-width: 300px;
+			margin: 0 auto;
+			display: flex;
+			row-gap: 7px;
+			flex-direction: column;
+			align-items: center;
+		}
+		.correction-of-grade__label{
+			display: block;
+
+		}
+		.correction-of-grade__input{
+			width: 100%;
+		}
+		.correction-of-grade__result{
+			min-height: 18px;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		class IsNotNumberError extends Error {
+			constructor(valText) {
+				super()
+				this.message = `${valText} має бути числом.`
+				this.name = 'IsNotNumberError'
+			}
+		}
+		class IsTooSmallNumb extends Error {
+			constructor(minNumb, valText) {
+				super()
+				this.message = `${valText} не може бути менше ${minNumb}.`
+				this.name = 'IsTooSmallNumb'
+			}
+		}
+		class IsTooHightNumb extends Error {
+			constructor(maxNumb, valText) {
+				super()
+				this.message = `${valText} не може бути більше ${maxNumb}.`
+				this.name = 'IsTooHightNumb'
+			}
+		}
+		class IsTheHolidays extends Error {
+			constructor() {
+				super()
+				this.message = 'У вас канікули.'
+				this.name = 'IsTheHolidays'
+			}
+		}
+		class IsLastMonthOfTheSemester extends Error {
+			constructor() {
+				super()
+				this.message = 'Це останній місяць семестру.'
+				this.name = 'IsLastMonthOfTheSemester'
+			}
+		}
+		class IsNotLowGrade extends Error {
+			constructor() {
+				super()
+				this.message = 'Оцінка не підлягає виправленню.'
+				this.name = 'IsNotLowGrade'
+			}
+		}
+
+		class CheckCorrectionOfGrade {
+			constructor(containerSelector, minGrade = 1, maxGrade = 100, maxFailingGrade = 59) {
+				this.minGrade = minGrade
+				this.maxGrade = maxGrade
+				this.maxFailingGrade = maxFailingGrade
+				this.el = this.render(containerSelector)
+			}
+			validateVal(val, minVal, maxVal, valText) {
+				if (typeof val !== 'number' || isNaN(val)) throw new IsNotNumberError(valText)
+				if (val < minVal) throw new IsTooSmallNumb(minVal, valText)
+				if (val > maxVal) throw new IsTooHightNumb(maxVal, valText)
+			}
+			checkCorrectionOfGrade() {
+				try {
+
+					const month = parseInt(this.monthInp.value)
+					this.validateVal(month, 1, 12, 'Місяць')
+
+					const grade = parseInt(this.gradeInp.value)
+					this.validateVal(grade, this.minGrade, this.maxGrade, 'Оцінка')
+
+					if (month > 8) throw new IsTheHolidays()
+					if (month === 4 || month === 8) throw new IsLastMonthOfTheSemester()
+					if (grade > this.maxFailingGrade) throw new IsNotLowGrade()
+					this.result.innerText = 'Ви можете виправити оцінку!'
+					this.result.style.color = 'green'
+
+				} catch (err) {
+					if (err instanceof IsNotNumberError || err instanceof IsTooSmallNumb || err instanceof IsTooHightNumb) {
+						this.result.innerText = 'Поля неправильно заповнені.'
+						console.log(err.message);
+					}
+					else this.result.innerText = `Ви не можете виправити оцінку. ${err.message}`
+					this.result.style.color = 'red'
+				}
+			}
+			createInput() {
+				const inp = document.createElement('INPUT')
+				inp.setAttribute('type', 'number')
+				inp.className = 'correction-of-grade__input'
+				return inp
+			}
+			createLabel(labelText) {
+				const label = document.createElement('LABEL')
+				label.className = 'correction-of-grade__label'
+				label.innerText = labelText
+				return label
+			}
+			createInputsBlock() {
+				const inputsBlock = document.createElement('DIV')
+				inputsBlock.className = 'correction-of-grade__inputs'
+
+				const monthLabel = this.createLabel('Місяць')
+				this.monthInp = this.createInput()
+				monthLabel.append(this.monthInp)
+				inputsBlock.append(monthLabel)
+
+				const gradeLabel = this.createLabel('Оцінка')
+				this.gradeInp = this.createInput()
+				gradeLabel.append(this.gradeInp)
+				inputsBlock.append(gradeLabel)
+
+				return inputsBlock
+			}
+			render(containerSelector) {
+				const container = document.createElement('DIV')
+				container.className = 'correction-of-grade__container'
+				container.append(this.createInputsBlock())
+
+				this.result = document.createElement('DIV')
+				this.result.className = 'correction-of-grade__result'
+				container.append(this.result)
+
+				const btn = document.createElement('BUTTON')
+				btn.innerText = 'Перевірити'
+				btn.className = 'correction-of-grade__btn'
+				btn.addEventListener('click', this.checkCorrectionOfGrade.bind(this))
+				container.append(btn)
+
+				document.querySelector(containerSelector).append(container)
+				return container
+			}
+		}
+		window.onload = function () {
+			let checkCorrectionOfGrade = new CheckCorrectionOfGrade('.correction-of-grade')
+		}
+	</script>
+	<h1>Задача 4</h1>
+	<h3>
+		<!-- Дано: -->
+		Користувач задає місяць навчання учня (перевіряти чи є числом, чи від 1 до 12, чи не канікули) та оцінку
+		(перевіряти чи є числом, чи від 1 до 100). Вивести чи зможе він виправити оцінку (якщо оцінка погана і це не
+		останній місяць у семестрі) . Обробку усіх помилок зробити з використанням відповідних класів.
+	</h3>
+	<div class="correction-of-grade"></div>
+</body>
+
+</html>
